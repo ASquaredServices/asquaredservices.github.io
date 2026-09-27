@@ -9,9 +9,10 @@ The website is live at **https://asquaredservices.github.io**.
 | [index.html](index.html) | All the page text: home page, Fall, Winter, Spring & Summer, and the forms |
 | [config.js](config.js) | **Prices, payment options, contact info**, and the Google Sheet link. Change prices here. |
 | [style.css](style.css) | Colors and layout. Each season's colors are near the top. |
-| [app.js](app.js) | Makes the tabs work, calculates the estimates, and sends the forms |
+| [app.js](app.js) | Makes the tabs work, calculates the estimates, checks phone numbers, and sends the forms |
+| [logo.svg](logo.svg) | The A² logo in color. [flier/logo-bw.svg](flier/logo-bw.svg) is the black-and-white version, and [favicon.svg](favicon.svg) is the browser tab icon. |
 | [google-sheet/](google-sheet/SETUP.md) | How to connect the forms to a Google Sheet, plus the script to paste in |
-| [flier/](flier/) | The printable flier ([flier.pdf](flier/flier.pdf)) and QR code |
+| [flier/](flier/) | The printable black-and-white flier ([flier.pdf](flier/flier.pdf)) and QR code. No prices on it; the QR code sends people to the website. |
 
 Text that still needs Adrian's real wording is marked with `DRAFT` comments in `index.html`.
 

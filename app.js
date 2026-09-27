@@ -23,9 +23,7 @@
 
     pages.forEach((p) => p.classList.toggle("active", p === page));
     document.body.dataset.theme = page.dataset.theme;
-    document.title = page.dataset.title
-      ? page.dataset.title + " · A Squared Services"
-      : "A Squared Services";
+    document.title = page.dataset.title ? page.dataset.title + " · A² Services" : "A² Services";
     $$(".tab").forEach((tab) => {
       if (tab.getAttribute("href") === "#" + page.id) tab.setAttribute("aria-current", "page");
       else tab.removeAttribute("aria-current");
@@ -83,7 +81,7 @@
   const choiceSets = {
     payment: () => ({
       name: "Payment",
-      options: C.paymentMethods.map((m) => ({ value: m })),
+      options: C.paymentMethods.map((m) => ({ value: m.name })),
     }),
     snowfall: () => ({
       name: "Snowfall",
@@ -138,6 +136,22 @@
     });
   });
 
+  // A note under the payment choices that explains how to pay.
+  $$('[data-choices="payment"]').forEach((group) => {
+    const form = group.closest("form");
+    const note = document.createElement("p");
+    note.className = "pay-note";
+    group.after(note);
+    const update = () => {
+      const picked = C.paymentMethods.find((m) => m.name === form.elements.Payment.value);
+      if (form.dataset.kind === "pass") note.textContent = C.seasonPass.paymentNote;
+      else note.textContent = picked ? picked.note : "You pay once the job is done.";
+    };
+    group.addEventListener("change", update);
+    form.addEventListener("reset", () => setTimeout(update));
+    update();
+  });
+
   const today = new Date().toLocaleDateString("en-CA"); // YYYY-MM-DD
   $$('input[type="date"]').forEach((input) => (input.min = today));
 
@@ -183,12 +197,14 @@
           total: "–",
           note: "Pick a driveway or sidewalk for us to shovel.",
           problem: "Please pick a driveway or sidewalk for us to shovel.",
+          meltFree: false,
+          subtotal: 0,
         };
       }
       const snowCost = base * snowfall.extra;
       const subtotal = base + snowCost;
-      const melt = C.winter.snowMelt;
-      const meltCost = f["Snow melt"].checked ? (subtotal > melt.freeOver ? 0 : melt.price) : null;
+      const meltFree = subtotal > C.winter.snowMelt.freeOver;
+      const meltCost = f["Snow melt"].checked ? (meltFree ? 0 : C.winter.snowMelt.price) : null;
 
       const lines = [];
       if (driveway && driveway.price) lines.push(["Driveway (" + driveway.label + ")", money(driveway.price)]);
@@ -200,6 +216,8 @@
         lines,
         total: money(subtotal + (meltCost || 0)),
         note: "The final price depends on how much snow actually falls.",
+        meltFree,
+        subtotal,
       };
     },
 
@@ -233,6 +251,7 @@
         dt.textContent = name;
         const dd = document.createElement("dd");
         dd.textContent = value;
+        dd.classList.toggle("free", value === "Free");
         row.append(dt, dd);
         return row;
       })
@@ -242,7 +261,68 @@
     total.textContent = est.total;
     total.classList.toggle("is-text", Boolean(est.isText));
     $(".summary-note", form).textContent = est.note || "";
+    if ("meltFree" in est) renderSnowMelt(form, est);
     return est;
+  }
+
+  // Shows "FREE" on the snow melt add-on once the order is big enough.
+  function renderSnowMelt(form, est) {
+    const melt = C.winter.snowMelt;
+    const badge = $("[data-melt-badge]", form);
+    const message = $("[data-melt-message]", form);
+    badge.closest(".addon").classList.toggle("is-free", est.meltFree);
+    if (est.meltFree) {
+      const oldPrice = document.createElement("s");
+      oldPrice.textContent = money(melt.price);
+      badge.replaceChildren(oldPrice, " FREE");
+      message.textContent = "Your order is over " + money(melt.freeOver) + ", so snow melt is free!";
+    } else {
+      badge.textContent = money(melt.price);
+      message.textContent =
+        "Free on orders over " + money(melt.freeOver) +
+        (est.subtotal ? " (yours is " + money(est.subtotal) + " so far)" : "") + ".";
+    }
+  }
+
+  // ---------------------------------------------------------- Phone check
+
+  const PHONE_MESSAGE = "Please enter a 10-digit phone number, like 617-555-0123.";
+
+  // Accepts 617-555-0123, (617) 555 0123, 6175550123, +1 617 555 0123, etc.
+  function phoneIsValid(value) {
+    const digits = value.replace(/\D/g, "");
+    return /^[\d\s().+-]+$/.test(value) && (digits.length === 10 || (digits.length === 11 && digits[0] === "1"));
+  }
+
+  // The form can't be sent until the phone is valid and there's a phone or an email.
+  function checkContact(form) {
+    const phone = form.elements.Phone;
+    const value = phone.value.trim();
+    let message = "";
+    if (value && !phoneIsValid(value)) message = PHONE_MESSAGE;
+    else if (!value && !form.elements.Email.value.trim()) message = "Please give us a phone number or an email.";
+    phone.setCustomValidity(message);
+  }
+
+  function setupPhone(form) {
+    const phone = form.elements.Phone;
+    const error = $('[data-error-for="Phone"]', form);
+    const showError = () => {
+      const value = phone.value.trim();
+      error.textContent = value && !phoneIsValid(value) ? PHONE_MESSAGE : "";
+    };
+    phone.addEventListener("change", () => {
+      const value = phone.value.trim();
+      if (phoneIsValid(value)) {
+        const digits = value.replace(/\D/g, "").slice(-10);
+        phone.value = digits.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
+      }
+      showError();
+    });
+    phone.addEventListener("invalid", showError);
+    phone.addEventListener("input", () => {
+      if (error.textContent) showError();
+    });
   }
 
   // -------------------------------------------------------------- Sending
@@ -269,12 +349,6 @@
     const form = event.currentTarget;
     const f = form.elements;
 
-    if (!f.Phone.value.trim() && !f.Email.value.trim()) {
-      f.Phone.setCustomValidity("Please give us a phone number or an email.");
-      f.Phone.reportValidity();
-      return;
-    }
-
     const est = renderEstimate(form);
     if (est.problem) {
       setStatus(form, est.problem, "error");
@@ -298,6 +372,7 @@
       if (result.result !== "success") throw new Error(result.error || "Request failed");
       const firstName = f.Name.value.trim().split(/\s+/)[0];
       form.reset();
+      checkContact(form);
       renderEstimate(form);
       setStatus(form, "Thanks" + (firstName ? ", " + firstName : "") + "! We got your request and will be in touch soon to confirm.", "success");
     } catch (err) {
@@ -310,14 +385,14 @@
 
   $$("form.booking").forEach((form) => {
     const update = (event) => {
-      if (event.target.name === "Phone" || event.target.name === "Email") {
-        form.elements.Phone.setCustomValidity("");
-      }
+      if (event.target.name === "Phone" || event.target.name === "Email") checkContact(form);
       renderEstimate(form);
     };
+    setupPhone(form);
     form.addEventListener("input", update);
     form.addEventListener("change", update);
     form.addEventListener("submit", submit);
+    checkContact(form);
     renderEstimate(form);
   });
 

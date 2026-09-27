@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>A Squared Services</title>
-  <meta name="description" content="Leaf removal in the fall, snow shoveling in the winter, and gardening help in the spring and summer.">
+  <title>A² Services</title>
+  <meta name="description" content="A² (A Squared) Services: two neighborhood kids near Lilac Court in Cambridge, MA, offering leaf removal in the fall, snow shoveling in the winter, and gardening help in the spring and summer.">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,6 +18,13 @@
 
   <!-- Icons used around the site: <svg class="icon"><use href="#i-leaf"/></svg> -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <!-- The A² logo. Colors come from --logo-a and --logo-2 (see style.css). Same drawing as logo.svg. -->
+    <symbol id="logo" viewBox="0 0 760 726">
+      <g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="64">
+        <g style="stroke: var(--logo-a)"><path d="M35 688 279 200C297 164 324 109 345 88"/><path d="M165 428H480"/><path d="M350 688 480 428"/></g>
+        <path style="stroke: var(--logo-2)" d="M345 88C375 58 415 38 460 38 535 38 588 95 585 165 583 205 575 238 560 268L480 428H725"/>
+      </g>
+    </symbol>
     <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11 12 3l9 8"/><path d="M5 9.5V20h14V9.5"/><path d="M10 20v-6h4v6"/></symbol>
     <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 20C5 11 10 5 20 4c-1 10-6 16-15 16Z"/><path d="M5 20l9-9"/></symbol>
     <symbol id="i-snow" viewBox="0 0 24 24"><path d="M12 2v20M3.34 7l17.32 10M3.34 17 20.66 7"/><path d="M9.5 3.5 12 5.5l2.5-2" /><path d="M9.5 20.5 12 18.5l2.5 2"/><path d="M18.11 5.59l-.48 3.16 2.98 1.17"/><path d="M3.39 14.09l2.98 1.16-.48 3.17"/><path d="M5.89 5.59l.48 3.16-2.98 1.17"/><path d="M20.61 14.09l-2.98 1.16.48 3.17"/></symbol>
@@ -28,9 +35,9 @@
 
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="#home">
-        <span class="logo" aria-hidden="true">A<sup>2</sup></span>
-        <span>A Squared Services</span>
+      <a class="brand" href="#home" aria-label="A² Services home">
+        <svg class="logo" aria-hidden="true"><use href="#logo"/></svg>
+        <span class="wordmark">A² <span>Services</span></span>
       </a>
       <nav class="tabs" aria-label="Main">
         <a class="tab" data-tab="home" href="#home"><svg class="icon"><use href="#i-home"/></svg>Home</a>
@@ -48,20 +55,40 @@
     <!-- ============================== HOME ============================== -->
     <section class="page" id="home" data-theme="home">
       <div class="hero">
-        <svg class="icon hero-art" aria-hidden="true"><use href="#i-leaf"/></svg>
-        <div class="container">
-          <h1>Yard &amp; snow help,<br>all year round.</h1>
-          <!-- DRAFT: Adrian will write the real description of A2 here. -->
-          <p class="lead">A Squared Services helps our neighbors keep their yards and driveways in shape through every season: raking leaves in the fall, shoveling snow in the winter, and gardening in the spring and summer.</p>
-          <div class="hero-actions">
+        <div class="container hero-grid">
+          <svg class="hero-logo" role="img" aria-label="A² logo"><use href="#logo"/></svg>
+          <div>
+            <p class="eyebrow">Lilac Court &middot; Cambridge, MA</p>
+            <h1>Yard &amp; snow help from two neighborhood kids.</h1>
+            <!-- DRAFT: Adrian will write the real description of A² here. -->
+            <p class="lead">A² Services is run by two neighborhood kids who want to help our community year-round. We rake leaves in the fall, shovel snow in the winter, and help with gardening in the spring and summer.</p>
+            <div class="hero-actions">
             <a class="btn btn-light" data-theme="fall" href="#fall"><svg class="icon"><use href="#i-leaf"/></svg>Fall</a>
             <a class="btn btn-light" data-theme="winter" href="#winter"><svg class="icon"><use href="#i-snow"/></svg>Winter</a>
             <a class="btn btn-light" data-theme="spring" href="#spring-summer"><svg class="icon"><use href="#i-sprout"/></svg>Spring &amp; Summer</a>
+            </div>
           </div>
         </div>
       </div>
 
       <div class="container">
+        <section class="block about" id="about">
+          <div class="about-card">
+            <div class="equation" role="img" aria-label="Adrian times Adrian equals A squared">
+              <div class="term"><span class="big">A</span><span class="name">Adrian</span></div>
+              <span class="op">&times;</span>
+              <div class="term"><span class="big">A</span><span class="name">Adrian</span></div>
+              <span class="op">=</span>
+              <div class="term"><svg class="logo"><use href="#logo"/></svg><span class="name">Us!</span></div>
+            </div>
+            <div class="about-text">
+              <h2>Why &ldquo;A Squared&rdquo;?</h2>
+              <p>We're Adrian and Adrian, two neighborhood kids who want to help our community year-round. Two A's multiplied together make A&sup2;, so that's our name!</p>
+              <p>We work on the few residential blocks around Lilac Court in Cambridge, MA, so we're never far away.</p>
+            </div>
+          </div>
+        </section>
+
         <section class="block">
           <h2>What we do</h2>
           <div class="season-cards">
@@ -107,8 +134,8 @@
             <p class="eyebrow"><svg class="icon"><use href="#i-snow"/></svg>Winter Season Pass</p>
             <h2><span data-price="seasonPass.price">$200</span> covers the whole winter</h2>
             <ul class="checks">
-              <li><svg class="icon"><use href="#i-check"/></svg>Every snowstorm covered</li>
-              <li><svg class="icon"><use href="#i-check"/></svg>Shoveling plus salt (snow melt)</li>
+              <li><svg class="icon"><use href="#i-check"/></svg>Every snowstorm this winter</li>
+              <li><svg class="icon"><use href="#i-check"/></svg>Everything covered: any size driveway, sidewalk, paths, and snow melt</li>
               <li><svg class="icon"><use href="#i-check"/></svg>No need to book each storm. We just show up.</li>
             </ul>
           </div>
@@ -270,9 +297,11 @@
                 <svg class="icon"><use href="#i-check"/></svg>
                 <span><b>Paths to your door</b>Free with every order</span>
               </div>
-              <label class="addon">
+              <!-- The badge and message here are updated by app.js as the order changes. -->
+              <label class="addon melt">
                 <input type="checkbox" name="Snow melt" value="Yes">
-                <span><b>Snow melt (salt)</b>Free on orders over <span data-price="winter.snowMelt.freeOver">$50</span>, otherwise <span data-price="winter.snowMelt.price">$5</span></span>
+                <span><b>Snow melt (salt)</b><span data-melt-message>Free on orders over <span data-price="winter.snowMelt.freeOver">$50</span>, otherwise <span data-price="winter.snowMelt.price">$5</span></span></span>
+                <span class="melt-badge" data-melt-badge></span>
               </label>
               <label class="field">
                 <span>Comments <em class="optional">(optional)</em></span>
@@ -331,6 +360,10 @@
                 <input type="checkbox" name="Watering" value="Yes">
                 <span><b>Watering</b>Free!</span>
               </label>
+              <label class="field">
+                <span>Anything else we should know? <em class="optional">(optional)</em></span>
+                <textarea name="Comments" rows="3"></textarea>
+              </label>
             </fieldset>
             <fieldset>
               <legend>How would you like to pay?</legend>
@@ -353,7 +386,7 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <span>&copy; 2026 A Squared Services</span>
+      <span class="footer-brand"><svg class="logo" aria-hidden="true"><use href="#logo"/></svg>&copy; 2026 A² (A Squared) Services &middot; Cambridge, MA</span>
       <nav aria-label="Footer">
         <a href="#fall">Fall</a>
         <a href="#winter">Winter</a>
@@ -374,7 +407,8 @@
       <div class="field-row">
         <label class="field">
           <span>Phone</span>
-          <input type="tel" name="Phone" autocomplete="tel">
+          <input type="tel" name="Phone" autocomplete="tel" placeholder="617-555-0123">
+          <span class="field-error" data-error-for="Phone"></span>
         </label>
         <label class="field">
           <span>Email</span>
@@ -385,6 +419,7 @@
       <label class="field">
         <span>Address</span>
         <input name="Address" autocomplete="street-address" required>
+        <span class="hint">We work on the blocks around Lilac Court in Cambridge.</span>
       </label>
       <!-- Spam trap: hidden from people, but bots fill it in. -->
       <label class="hp" aria-hidden="true">Leave this empty <input name="website" tabindex="-1" autocomplete="off"></label>

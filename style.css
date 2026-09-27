@@ -16,6 +16,10 @@
   --winter: #1c7ed6;
   --spring: #37b24d;
   --brand: #2f5bea;
+
+  /* Logo colors: the "A" and the "2" */
+  --logo-a: #16296e;
+  --logo-2: #3d8bff;
 }
 
 [data-theme="home"] {
@@ -143,29 +147,28 @@ h3 {
 .brand {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   color: var(--ink);
-  font-size: 1.15rem;
-  font-weight: 900;
   text-decoration: none;
 }
 
 .logo {
-  display: inline-block;
-  width: 40px;
-  height: 40px;
-  border-radius: 11px;
-  background: linear-gradient(135deg, #1d3fae, #2f5bea);
-  color: #fff;
-  font-size: 19px;
-  font-weight: 900;
-  line-height: 40px;
-  text-align: center;
+  display: block;
+  flex: none;
+  width: 44px;
+  height: 42px;
 }
 
-.logo sup {
-  font-size: 0.55em;
-  line-height: 0;
+.wordmark {
+  color: var(--logo-a);
+  font-size: 1.4rem;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+}
+
+.wordmark span {
+  color: var(--ink);
+  font-weight: 800;
 }
 
 .tabs {
@@ -324,6 +327,34 @@ h3 {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 24px 48px;
+}
+
+.hero-logo {
+  --logo-a: #fff;
+  --logo-2: #74b3ff;
+  order: 2;
+  width: 250px;
+  height: 239px;
+  filter: drop-shadow(0 6px 18px rgb(0 0 0 / 0.25));
+}
+
+@media (max-width: 760px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-logo {
+    order: 0;
+    width: 96px;
+    height: 92px;
+  }
 }
 
 @media (max-width: 700px) {
@@ -489,6 +520,85 @@ h3 {
   display: inline-flex;
   align-items: center;
   gap: 4px;
+}
+
+/* Why A²? */
+
+.about-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 24px 40px;
+  padding: 28px 32px;
+  border-radius: 24px;
+  background: var(--card);
+  box-shadow: var(--shadow);
+}
+
+.equation {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.term {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.term .big {
+  height: 72px;
+  color: var(--logo-a);
+  font-size: 72px;
+  font-weight: 900;
+  line-height: 72px;
+}
+
+.term .logo {
+  width: 76px;
+  height: 72px;
+}
+
+.term .name {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.op {
+  color: var(--muted);
+  font-size: 40px;
+  font-weight: 800;
+  line-height: 72px;
+}
+
+.about-text h2 {
+  margin: 0 0 10px;
+  font-size: 1.6rem;
+}
+
+.about-text p {
+  margin: 0 0 10px;
+  color: var(--muted);
+}
+
+.about-text p:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 760px) {
+  .about-card {
+    grid-template-columns: 1fr;
+    padding: 24px 20px;
+  }
+
+  .equation {
+    justify-content: center;
+  }
 }
 
 /* Season pass */
@@ -682,9 +792,23 @@ legend + * {
   margin-bottom: 18px;
 }
 
-.field > span {
+.field > span:first-child {
   font-size: 0.95rem;
   font-weight: 800;
+}
+
+.field-error {
+  color: #c92a2a;
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.field-error:empty {
+  display: none;
+}
+
+.field:has(.field-error:not(:empty)) input {
+  border-color: #e03131;
 }
 
 .field:last-child {
@@ -914,6 +1038,57 @@ textarea:focus {
   stroke-width: 3;
 }
 
+/* Snow melt: turns into a highlighted "FREE" once the order is big enough */
+
+.addon.melt {
+  align-items: center;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.addon.melt > span:nth-of-type(1) {
+  flex: 1;
+}
+
+.addon > .melt-badge {
+  flex: none;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: #f1f3f5;
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.melt-badge s {
+  margin-right: 2px;
+  font-weight: 700;
+  opacity: 0.75;
+}
+
+.addon.melt.is-free {
+  border-color: var(--accent);
+  background: var(--tint);
+}
+
+.addon.melt.is-free > .melt-badge {
+  background: var(--accent-dark);
+  color: #fff;
+}
+
+.addon.melt.is-free [data-melt-message] {
+  color: var(--accent-dark);
+  font-weight: 800;
+}
+
+.pay-note {
+  margin: 12px 0 0;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: var(--tint);
+  font-size: 0.92rem;
+}
+
 /* Estimate box */
 
 .summary {
@@ -953,6 +1128,10 @@ textarea:focus {
   margin: 0;
   font-weight: 800;
   white-space: nowrap;
+}
+
+.line dd.free {
+  color: var(--accent-dark);
 }
 
 .summary-total {
@@ -1050,6 +1229,17 @@ textarea:focus {
   align-items: center;
   justify-content: space-between;
   gap: 12px 24px;
+}
+
+.footer-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-brand .logo {
+  width: 29px;
+  height: 28px;
 }
 
 .footer-inner nav {

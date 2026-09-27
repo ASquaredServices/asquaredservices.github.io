@@ -17,7 +17,20 @@ window.A2_CONFIG = {
     email: "", // e.g. "asquaredservices@gmail.com"
   },
 
-  paymentMethods: ["Cash", "Check", "Venmo", "PayPal", "Zelle"],
+  // The note appears under the payment choices when that option is picked.
+  paymentMethods: [
+    {
+      name: "Cash",
+      note: "Pay us in cash when we finish the job. If you won't be home, leave it in an envelope marked “A²” and tell us where to find it in the comments.",
+    },
+    {
+      name: "Check",
+      note: "Pay by check when we finish the job. Hand it to us, or leave it in an envelope marked “A²” and tell us where to find it in the comments.",
+    },
+    { name: "Venmo", note: "When the job is done, we'll text or email you our Venmo so you can pay." },
+    { name: "PayPal", note: "When the job is done, we'll text or email you our PayPal so you can pay." },
+    { name: "Zelle", note: "When the job is done, we'll text or email you our Zelle info so you can pay." },
+  ],
 
   fall: {
     pricePerBag: 10, // per full 30-gallon bag of leaves
@@ -47,5 +60,6 @@ window.A2_CONFIG = {
 
   seasonPass: {
     price: 200,
+    paymentNote: "When we confirm your Season Pass, we'll let you know when payment is due.",
   },
 };
