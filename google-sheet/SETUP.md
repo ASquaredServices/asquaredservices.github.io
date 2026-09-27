@@ -9,7 +9,7 @@ This takes about 10 minutes and only needs to be done once.
 
 ## 1. Make the sheet
 
-1. Sign in to the Google account that should own the requests (ideally the A Squared Services business account).
+1. Sign in to the Google account that should own the requests (ideally the A Squared Services business account). **It needs a Gmail address.** If you sign in to Google with another address, like an iCloud one, the notification emails are sent "from" that address through Google, so services like iCloud treat them as fake and reject them ("554 5.7.1 [HM08] Message rejected due to local policy"). To fix that, [add Gmail to your Google Account](https://support.google.com/accounts/answer/76194): go to [mail.google.com](https://mail.google.com), sign in, and follow the steps.
 2. Go to [sheets.new](https://sheets.new) to make a new spreadsheet. Name it something like **A2 Requests**.
 
 You don't need to make any tabs or columns. The first time each form sends a request, the script makes its tab (**Fall**, **Winter**, **Spring & Summer**, **Season Pass**) with the column names in row 1. If you already made tabs for these, it uses them. Capitalization and punctuation don't matter, so a tab called "spring/summer" works too.
@@ -19,7 +19,7 @@ You don't need to make any tabs or columns. The first time each form sends a req
 1. In the spreadsheet menu, click **Extensions → Apps Script**.
 2. Delete the few lines of sample code that are there.
 3. Copy everything in [Code.gs](Code.gs) and paste it in.
-4. Optional: to send notifications to a different email (or to more than one), put it between the quotes on the `NOTIFY_EMAIL` line. Leaving it empty sends them to the Gmail account that owns the sheet, which is the most reliable. Don't use an iCloud address: Apple blocks these automated emails ("554 5.7.1 [HM08] Message rejected due to local policy"). To get alerts on your phone, use the Gmail app, or add the Gmail account to your iPhone's Mail app.
+4. Optional: to send notifications to a different email (or to more than one), put it between the quotes on the `NOTIFY_EMAIL` line. Leaving it empty sends them to the Gmail account that owns the sheet. To get alerts on your phone, use the Gmail app, add the Gmail account to your iPhone's Mail app, or put your phone's usual email address here.
 5. Click the **Save** icon.
 
 ## 3. Test it

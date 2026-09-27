@@ -7,8 +7,8 @@
  */
 
 // Who gets an email for each new request. Leave "" to use the Google
-// account that owns this script (recommended). Separate several addresses
-// with commas. Avoid iCloud addresses: Apple blocks these automated emails.
+// account that owns this script. Separate several addresses with commas.
+// The account that owns this script needs a Gmail address (see SETUP.md).
 const NOTIFY_EMAIL = "";
 
 // To test the setup, click "Run" with testSetup picked in the menu at the
