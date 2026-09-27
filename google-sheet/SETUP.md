@@ -20,7 +20,18 @@ This takes about 10 minutes and only needs to be done once.
 4. Optional: to send notifications to a different email (or to more than one), put it between the quotes on the `NOTIFY_EMAIL` line.
 5. Click the **Save** icon.
 
-## 3. Publish it as a web app
+## 3. Test it
+
+1. In the menu at the top of the editor (next to **Run**), make sure **testSetup** is picked.
+2. Click **Run**.
+3. The first time, Google asks you to authorize the script:
+   - Click **Review permissions** and pick your account.
+   - You'll see "Google hasn't verified this app." That's expected, because it's your own script. Click **Advanced**, then **Go to (project name) (unsafe)**, then **Allow**.
+4. The log at the bottom should say "It worked!" The sheet should have a new **Test** tab, and you should get a test email. You can delete the Test tab afterward.
+
+Don't click Run with **doPost** picked. It only runs when the website sends a form, so running it by hand just gives an error.
+
+## 4. Publish it as a web app
 
 1. Click **Deploy → New deployment**.
 2. Click the gear icon next to "Select type" and choose **Web app**.
@@ -28,15 +39,12 @@ This takes about 10 minutes and only needs to be done once.
    - Description: `A2 website form`
    - Execute as: **Me**
    - Who has access: **Anyone**
-4. Click **Deploy**.
-5. Google will ask you to authorize the script:
-   - Click **Authorize access** and pick your account.
-   - You'll see "Google hasn't verified this app." That's expected, because it's your own script. Click **Advanced**, then **Go to (project name) (unsafe)**, then **Allow**.
-6. Copy the **Web app URL**. It looks like `https://script.google.com/macros/s/…/exec`.
+4. Click **Deploy**. If Google asks you to authorize again, follow the same steps as in part 3.
+5. Copy the **Web app URL**. It looks like `https://script.google.com/macros/s/…/exec`.
 
 To check that it worked, paste the URL into a browser. You should see "The A Squared Services form receiver is running."
 
-## 4. Connect the website
+## 5. Connect the website
 
 Put the URL in [config.js](../config.js) between the quotes on the `formEndpoint:` line, then commit and push to `main`. Or just send the URL to your dad and we'll do it.
 

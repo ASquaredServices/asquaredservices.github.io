@@ -10,7 +10,27 @@
 // account that owns this script. Separate several addresses with commas.
 const NOTIFY_EMAIL = "";
 
+// To test the setup, click "Run" with testSetup picked in the menu at the
+// top. It adds a row to a "Test" tab and emails you, without the website.
+function testSetup() {
+  const data = {
+    Name: "Test Person",
+    Phone: "617-555-0123",
+    Address: "1 Lilac Court",
+    Comments: "This is a test from testSetup. You can delete the Test tab.",
+  };
+  const fields = Object.keys(data);
+  saveRow_("Test", fields, data);
+  notify_("Test", fields, data);
+  console.log("It worked! Check the new Test tab in the sheet and your email.");
+}
+
+// Runs when the website sends a form. (Clicking "Run" on this in the editor
+// won't work, because there's no form data. Use testSetup instead.)
 function doPost(e) {
+  if (!e || !e.parameter) {
+    throw new Error("doPost only runs when the website sends a form. To test, pick testSetup in the menu at the top and click Run.");
+  }
   const data = e.parameter;
 
   // Bots fill in the hidden "website" field; people never see it.
