@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A Squared Services flier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap">
+  <!--
+    Printable US-letter flier. To make the PDF, open this page in Chrome,
+    print (Cmd+P), choose "Save as PDF", set Margins to "None", and turn on
+    "Background graphics". The QR code (qr-code.svg) links to
+    https://asquaredservices.github.io
+  -->
+  <style>
+    @page {
+      size: letter;
+      margin: 0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+    }
+
+    body {
+      background: #e9ecf2;
+      color: #172033;
+      font-family: "Nunito", system-ui, sans-serif;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .sheet {
+      display: flex;
+      flex-direction: column;
+      width: 8.5in;
+      height: 11in;
+      margin: 0 auto;
+      padding: 0.5in 0.5in 0.35in;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    @media screen {
+      .sheet {
+        margin: 24px auto;
+        box-shadow: 0 10px 40px rgb(0 0 0 / 0.15);
+      }
+    }
+
+    .icon {
+      width: 1em;
+      height: 1em;
+      flex: none;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* Header */
+
+    .top {
+      display: flex;
+      align-items: center;
+      gap: 0.28in;
+    }
+
+    .logo {
+      display: inline-block;
+      width: 1.15in;
+      height: 1.15in;
+      border-radius: 0.26in;
+      background: linear-gradient(135deg, #16296e, #2f5bea);
+      color: #fff;
+      font-size: 54pt;
+      font-weight: 900;
+      line-height: 1.15in;
+      text-align: center;
+    }
+
+    .logo sup {
+      font-size: 0.5em;
+      line-height: 0;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 40pt;
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.01em;
+    }
+
+    .tagline {
+      margin: 0.08in 0 0;
+      color: #586174;
+      font-size: 18pt;
+      font-weight: 700;
+    }
+
+    .stripe {
+      height: 0.09in;
+      margin: 0.3in 0 0.32in;
+      border-radius: 99px;
+      background: linear-gradient(90deg, #e8590c 0 33.3%, #1c7ed6 33.3% 66.6%, #37b24d 66.6%);
+    }
+
+    /* Seasons */
+
+    .seasons {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.2in;
+    }
+
+    .season {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border-radius: 0.18in;
+      background: var(--tint);
+    }
+
+    .fall {
+      --hero: linear-gradient(135deg, #a61e1e, #d9480f 60%, #f08c00);
+      --tint: #fff4e6;
+      --dark: #c92a2a;
+    }
+
+    .winter {
+      --hero: linear-gradient(135deg, #0b3d91, #1971c2 60%, #4dabf7);
+      --tint: #e7f5ff;
+      --dark: #1864ab;
+    }
+
+    .spring {
+      --hero: linear-gradient(135deg, #1f7a35, #2f9e44 50%, #94c11f 80%, #fab005);
+      --tint: #f4fce3;
+      --dark: #2b8a3e;
+    }
+
+    .season-top {
+      display: flex;
+      align-items: center;
+      gap: 0.1in;
+      padding: 0.14in 0.16in;
+      background: var(--hero);
+      color: #fff;
+      font-size: 10pt;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .season-top .icon {
+      width: 0.28in;
+      height: 0.28in;
+    }
+
+    .season-body {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      padding: 0.16in 0.18in 0.2in;
+    }
+
+    h2 {
+      margin: 0 0 0.06in;
+      font-size: 17pt;
+      font-weight: 900;
+      line-height: 1.1;
+    }
+
+    .season p {
+      margin: 0 0 0.16in;
+      color: #3d4658;
+      font-size: 11.5pt;
+      line-height: 1.4;
+    }
+
+    .season .price {
+      margin: auto 0 0;
+      color: var(--dark);
+      font-size: 22pt;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .price small {
+      font-size: 11pt;
+      font-weight: 800;
+    }
+
+    /* Season pass and QR code */
+
+    .bottom {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 0.2in;
+      margin-top: 0.22in;
+    }
+
+    .pass {
+      position: relative;
+      overflow: hidden;
+      padding: 0.24in;
+      border-radius: 0.18in;
+      background: linear-gradient(135deg, #0b3d91, #1971c2 60%, #4dabf7);
+      color: #fff;
+    }
+
+    .pass .art {
+      position: absolute;
+      right: -0.45in;
+      bottom: -0.5in;
+      width: 2.2in;
+      height: 2.2in;
+      opacity: 0.16;
+      stroke-width: 1.4;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 0.08in;
+      margin: 0 0 0.06in;
+      font-size: 10.5pt;
+      font-weight: 900;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+
+    .pass-price {
+      margin: 0;
+      font-size: 50pt;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .pass ul {
+      display: grid;
+      gap: 0.05in;
+      margin: 0.14in 0 0;
+      padding: 0;
+      list-style: none;
+      font-size: 12pt;
+      font-weight: 700;
+    }
+
+    .pass li {
+      display: flex;
+      align-items: center;
+      gap: 0.08in;
+    }
+
+    .pass li .icon {
+      width: 0.2in;
+      height: 0.2in;
+      padding: 0.02in;
+      border-radius: 50%;
+      background: #fff;
+      color: #1864ab;
+      stroke-width: 3.5;
+    }
+
+    .scan {
+      display: flex;
+      align-items: center;
+      gap: 0.2in;
+      padding: 0.2in;
+      border: 0.035in solid #172033;
+      border-radius: 0.18in;
+    }
+
+    .scan img {
+      width: 1.9in;
+      height: 1.9in;
+      flex: none;
+    }
+
+    .scan-title {
+      margin: 0 0 0.08in;
+      font-size: 20pt;
+      font-weight: 900;
+      line-height: 1.05;
+    }
+
+    .scan p {
+      margin: 0;
+    }
+
+    .url {
+      color: #1d3fae;
+      font-size: 11pt;
+      font-weight: 800;
+    }
+
+    .contact {
+      margin-top: 0.1in !important;
+      color: #586174;
+      font-size: 10.5pt;
+      font-weight: 700;
+    }
+
+    .todo {
+      padding: 0 0.04in;
+      background: #fff3bf;
+    }
+
+    /* How it works */
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.2in;
+      margin: 0.3in 0 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: step;
+    }
+
+    .steps li {
+      display: flex;
+      align-items: center;
+      gap: 0.1in;
+      color: #3d4658;
+      font-size: 11.5pt;
+      font-weight: 700;
+      line-height: 1.3;
+      counter-increment: step;
+    }
+
+    .steps li::before {
+      content: counter(step);
+      display: grid;
+      flex: none;
+      place-items: center;
+      width: 0.34in;
+      height: 0.34in;
+      border-radius: 50%;
+      background: #edf2ff;
+      color: #1d3fae;
+      font-size: 13pt;
+      font-weight: 900;
+    }
+
+    /* Tear-off tabs */
+
+    .tear {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      height: 2in;
+      margin-top: auto;
+      border-top: 1.5px dashed #9aa3b5;
+    }
+
+    .scissors {
+      position: absolute;
+      top: -0.12in;
+      left: -0.05in;
+      padding: 0 0.04in;
+      background: #fff;
+      color: #9aa3b5;
+      font-size: 13pt;
+      line-height: 1;
+    }
+
+    .tab {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.03in;
+      padding: 0.08in 0;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      white-space: nowrap;
+    }
+
+    .tab + .tab {
+      border-right: 1.5px dashed #9aa3b5;
+    }
+
+    .tab b {
+      font-size: 11pt;
+      font-weight: 900;
+    }
+
+    .tab span {
+      color: #1d3fae;
+      font-size: 8pt;
+      font-weight: 800;
+    }
+  </style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 20C5 11 10 5 20 4c-1 10-6 16-15 16Z"/><path d="M5 20l9-9"/></symbol>
+    <symbol id="i-snow" viewBox="0 0 24 24"><path d="M12 2v20M3.34 7l17.32 10M3.34 17 20.66 7"/><path d="M9.5 3.5 12 5.5l2.5-2" /><path d="M9.5 20.5 12 18.5l2.5 2"/><path d="M18.11 5.59l-.48 3.16 2.98 1.17"/><path d="M3.39 14.09l2.98 1.16-.48 3.17"/><path d="M5.89 5.59l.48 3.16-2.98 1.17"/><path d="M20.61 14.09l-2.98 1.16.48 3.17"/></symbol>
+    <symbol id="i-sprout" viewBox="0 0 24 24"><path d="M12 21v-9"/><path d="M12 12c0-4.5 3-7 8-7 0 4.5-3 7-8 7Z"/><path d="M12 14.5c0-3.5-2.4-5.5-6.5-5.5 0 3.5 2.4 5.5 6.5 5.5Z"/><path d="M7 21h10"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  </svg>
+
+  <div class="sheet">
+    <header class="top">
+      <div class="logo">A<sup>2</sup></div>
+      <div>
+        <h1>A Squared Services</h1>
+        <p class="tagline">Yard &amp; snow help, all year round</p>
+      </div>
+    </header>
+
+    <div class="stripe"></div>
+
+    <section class="seasons">
+      <article class="season fall">
+        <div class="season-top"><svg class="icon"><use href="#i-leaf"/></svg>Fall</div>
+        <div class="season-body">
+          <h2>Leaf removal</h2>
+          <p>We rake, blow, bag, and haul away your leaves. No equipment needed.</p>
+          <p class="price">$10 <small>per bag</small></p>
+        </div>
+      </article>
+      <article class="season winter">
+        <div class="season-top"><svg class="icon"><use href="#i-snow"/></svg>Winter</div>
+        <div class="season-body">
+          <h2>Snow shoveling</h2>
+          <p>Driveways and sidewalks, plus free paths to your door. Snow melt available.</p>
+          <p class="price"><small>from</small> $20</p>
+        </div>
+      </article>
+      <article class="season spring">
+        <div class="season-top"><svg class="icon"><use href="#i-sprout"/></svg>Spring &amp; Summer</div>
+        <div class="season-body">
+          <h2>Gardening</h2>
+          <p>Tell us what your garden needs. Watering is always free!</p>
+          <p class="price">Free <small>quotes</small></p>
+        </div>
+      </article>
+    </section>
+
+    <section class="bottom">
+      <div class="pass">
+        <svg class="icon art" aria-hidden="true"><use href="#i-snow"/></svg>
+        <p class="eyebrow"><svg class="icon"><use href="#i-snow"/></svg>Winter Season Pass</p>
+        <p class="pass-price">$200</p>
+        <ul>
+          <li><svg class="icon"><use href="#i-check"/></svg>Every snowstorm covered</li>
+          <li><svg class="icon"><use href="#i-check"/></svg>Shoveling + salt</li>
+          <li><svg class="icon"><use href="#i-check"/></svg>No need to book each storm</li>
+        </ul>
+      </div>
+      <div class="scan">
+        <img src="qr-code.svg" alt="QR code linking to asquaredservices.github.io">
+        <div>
+          <p class="scan-title">Scan to book online</p>
+          <p class="url">asquaredservices.<wbr>github.io</p>
+          <!-- Contact info: fill in once Adrian sends it -->
+          <p class="contact"><span class="todo">Phone / email coming soon</span></p>
+        </div>
+      </div>
+    </section>
+
+    <ol class="steps">
+      <li>Scan the code or visit our website</li>
+      <li>Pick a season and fill out the short form</li>
+      <li>We text or email you to confirm</li>
+    </ol>
+
+    <footer class="tear">
+      <span class="scissors">&#9986;</span>
+      <div class="tab"><b>A² Services</b><span>asquaredservices.github.io</span></div>
+      <div class="tab"><b>A² Services</b><span>asquaredservices.github.io</span></div>
+      <div class="tab"><b>A² Services</b><span>asquaredservices.github.io</span></div>
+      <div class="tab"><b>A² Services</b><span>asquaredservices.github.io</span></div>
+      <div class="tab"><b>A² Services</b><span>asquaredservices.github.io</span></div>
+      <div class="tab"><b>A² Services</b><span>asquaredservices.github.io</span></div>
+      <div class="tab"><b>A² Services</b><span>asquaredservices.github.io</span></div>
+      <div class="tab"><b>A² Services</b><span>asquaredservices.github.io</span></div>
+    </footer>
+  </div>
+</body>
+</html>

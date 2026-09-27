@@ -4,17 +4,392 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>A Squared Services</title>
-  <meta name="description" content="A Squared Services — website coming soon.">
+  <meta name="description" content="Leaf removal in the fall, snow shoveling in the winter, and gardening help in the spring and summer.">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap">
   <link rel="stylesheet" href="style.css">
+  <script>document.documentElement.classList.add("js");</script>
+  <script src="config.js" defer></script>
+  <script src="app.js" defer></script>
 </head>
-<body>
-  <main class="card">
-    <div class="logo" aria-hidden="true">A<sup>2</sup></div>
-    <h1>A Squared Services</h1>
-    <p class="tagline">Our website is under construction.</p>
-    <p>Adrian is building this site right now. Check back soon to see what we offer.</p>
+<body data-theme="home">
+
+  <!-- Icons used around the site: <svg class="icon"><use href="#i-leaf"/></svg> -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11 12 3l9 8"/><path d="M5 9.5V20h14V9.5"/><path d="M10 20v-6h4v6"/></symbol>
+    <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 20C5 11 10 5 20 4c-1 10-6 16-15 16Z"/><path d="M5 20l9-9"/></symbol>
+    <symbol id="i-snow" viewBox="0 0 24 24"><path d="M12 2v20M3.34 7l17.32 10M3.34 17 20.66 7"/><path d="M9.5 3.5 12 5.5l2.5-2" /><path d="M9.5 20.5 12 18.5l2.5 2"/><path d="M18.11 5.59l-.48 3.16 2.98 1.17"/><path d="M3.39 14.09l2.98 1.16-.48 3.17"/><path d="M5.89 5.59l.48 3.16-2.98 1.17"/><path d="M20.61 14.09l-2.98 1.16.48 3.17"/></symbol>
+    <symbol id="i-sprout" viewBox="0 0 24 24"><path d="M12 21v-9"/><path d="M12 12c0-4.5 3-7 8-7 0 4.5-3 7-8 7Z"/><path d="M12 14.5c0-3.5-2.4-5.5-6.5-5.5 0 3.5 2.4 5.5 6.5 5.5Z"/><path d="M7 21h10"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  </svg>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#home">
+        <span class="logo" aria-hidden="true">A<sup>2</sup></span>
+        <span>A Squared Services</span>
+      </a>
+      <nav class="tabs" aria-label="Main">
+        <a class="tab" data-tab="home" href="#home"><svg class="icon"><use href="#i-home"/></svg>Home</a>
+        <a class="tab" data-tab="fall" href="#fall"><svg class="icon"><use href="#i-leaf"/></svg>Fall</a>
+        <a class="tab" data-tab="winter" href="#winter"><svg class="icon"><use href="#i-snow"/></svg>Winter</a>
+        <a class="tab" data-tab="spring" href="#spring-summer"><svg class="icon"><use href="#i-sprout"/></svg>Spring &amp; Summer</a>
+      </nav>
+    </div>
+  </header>
+
+  <p class="notice" data-booking-notice hidden>This site is still being built. Online booking isn't switched on yet.</p>
+
+  <main>
+
+    <!-- ============================== HOME ============================== -->
+    <section class="page" id="home" data-theme="home">
+      <div class="hero">
+        <svg class="icon hero-art" aria-hidden="true"><use href="#i-leaf"/></svg>
+        <div class="container">
+          <h1>Yard &amp; snow help,<br>all year round.</h1>
+          <!-- DRAFT: Adrian will write the real description of A2 here. -->
+          <p class="lead">A Squared Services helps our neighbors keep their yards and driveways in shape through every season: raking leaves in the fall, shoveling snow in the winter, and gardening in the spring and summer.</p>
+          <div class="hero-actions">
+            <a class="btn btn-light" data-theme="fall" href="#fall"><svg class="icon"><use href="#i-leaf"/></svg>Fall</a>
+            <a class="btn btn-light" data-theme="winter" href="#winter"><svg class="icon"><use href="#i-snow"/></svg>Winter</a>
+            <a class="btn btn-light" data-theme="spring" href="#spring-summer"><svg class="icon"><use href="#i-sprout"/></svg>Spring &amp; Summer</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <section class="block">
+          <h2>What we do</h2>
+          <div class="season-cards">
+            <a class="season-card" data-theme="fall" href="#fall">
+              <div class="season-card-top"><svg class="icon"><use href="#i-leaf"/></svg>Fall</div>
+              <div class="season-card-body">
+                <h3>Leaf removal</h3>
+                <p>We rake, blow, bag, and haul away your leaves.</p>
+                <div class="season-card-foot">
+                  <span class="from"><span data-price="fall.pricePerBag">$10</span> per bag</span>
+                  <span class="go">Book <svg class="icon"><use href="#i-arrow"/></svg></span>
+                </div>
+              </div>
+            </a>
+            <a class="season-card" data-theme="winter" href="#winter">
+              <div class="season-card-top"><svg class="icon"><use href="#i-snow"/></svg>Winter</div>
+              <div class="season-card-body">
+                <h3>Snow shoveling</h3>
+                <p>Driveways and sidewalks, plus free paths to your door.</p>
+                <div class="season-card-foot">
+                  <span class="from">From <span data-price="winter.driveway.1.price">$20</span></span>
+                  <span class="go">Book <svg class="icon"><use href="#i-arrow"/></svg></span>
+                </div>
+              </div>
+            </a>
+            <a class="season-card" data-theme="spring" href="#spring-summer">
+              <div class="season-card-top"><svg class="icon"><use href="#i-sprout"/></svg>Spring &amp; Summer</div>
+              <div class="season-card-body">
+                <h3>Gardening</h3>
+                <p>Tell us what your garden needs. Watering is always free.</p>
+                <div class="season-card-foot">
+                  <span class="from">Free quote</span>
+                  <span class="go">Book <svg class="icon"><use href="#i-arrow"/></svg></span>
+                </div>
+              </div>
+            </a>
+          </div>
+        </section>
+
+        <section class="block pass" id="season-pass" data-theme="winter">
+          <svg class="icon hero-art" aria-hidden="true"><use href="#i-snow"/></svg>
+          <div class="pass-intro">
+            <p class="eyebrow"><svg class="icon"><use href="#i-snow"/></svg>Winter Season Pass</p>
+            <h2><span data-price="seasonPass.price">$200</span> covers the whole winter</h2>
+            <ul class="checks">
+              <li><svg class="icon"><use href="#i-check"/></svg>Every snowstorm covered</li>
+              <li><svg class="icon"><use href="#i-check"/></svg>Shoveling plus salt (snow melt)</li>
+              <li><svg class="icon"><use href="#i-check"/></svg>No need to book each storm. We just show up.</li>
+            </ul>
+          </div>
+          <details class="pass-signup">
+            <summary class="btn btn-light">Sign up for the Season Pass</summary>
+            <form class="booking" data-kind="pass">
+              <input type="hidden" name="form" value="Season Pass">
+              <div class="booking-main">
+                <div data-contact-fields></div>
+                <fieldset>
+                  <legend>Your property</legend>
+                  <div class="field">
+                    <span>Parking spaces / driveway</span>
+                    <div class="choices" data-choices="driveway" data-plain></div>
+                  </div>
+                  <div class="field">
+                    <span>Sidewalk</span>
+                    <div class="choices" data-choices="sidewalk" data-plain></div>
+                  </div>
+                  <label class="field">
+                    <span>Anything else we should know? <em class="optional">(optional)</em></span>
+                    <textarea name="Comments" rows="3"></textarea>
+                  </label>
+                </fieldset>
+                <fieldset>
+                  <legend>How would you like to pay?</legend>
+                  <div class="choices" data-choices="payment"></div>
+                </fieldset>
+              </div>
+              <aside class="summary">
+                <h3>Your order</h3>
+                <dl class="summary-lines"></dl>
+                <p class="summary-total"><span></span><strong></strong></p>
+                <p class="summary-note"></p>
+                <button class="btn btn-block" type="submit">Send request</button>
+                <p class="form-status" role="status" aria-live="polite"></p>
+              </aside>
+            </form>
+          </details>
+        </section>
+
+        <section class="block">
+          <h2>How it works</h2>
+          <ol class="steps">
+            <li><b>Pick a season</b>Choose the service you need and fill out the short form.</li>
+            <li><b>We confirm</b>We'll text or email you to confirm the day and the price.</li>
+            <li><b>We get it done</b>We do the work, and you pay the way you picked.</li>
+          </ol>
+        </section>
+
+        <section class="block contact" id="contact">
+          <h2>Contact us</h2>
+          <div class="contact-card">
+            <!-- Contact info comes from config.js -->
+            <p data-contact>Contact info coming soon.</p>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <!-- ============================== FALL ============================== -->
+    <section class="page" id="fall" data-theme="fall" data-title="Fall">
+      <div class="season-hero">
+        <svg class="icon hero-art" aria-hidden="true"><use href="#i-leaf"/></svg>
+        <div class="container">
+          <p class="eyebrow"><svg class="icon"><use href="#i-leaf"/></svg>Fall</p>
+          <h1>Leaf removal</h1>
+          <!-- DRAFT: Adrian will write the real fall description here. -->
+          <p class="lead">During the fall, we come to your home to rake and blow your leaves, bag them up, and take them off your property. No equipment needed on your end.</p>
+          <p class="price-chip"><span data-price="fall.pricePerBag">$10</span> per bag</p>
+        </div>
+      </div>
+      <div class="container">
+        <form class="booking" data-kind="fall">
+          <input type="hidden" name="form" value="Fall">
+          <div class="booking-main">
+            <h2>Request fall service</h2>
+            <div data-contact-fields></div>
+            <fieldset>
+              <legend>Your job</legend>
+              <label class="field">
+                <span>Date of service</span>
+                <input type="date" name="Date" required>
+              </label>
+              <div class="field">
+                <span>Estimated number of leaf bags</span>
+                <div class="stepper">
+                  <button type="button" data-step="-1" aria-label="One fewer bag">&minus;</button>
+                  <input type="number" name="Bags" value="1" min="1" max="99" inputmode="numeric" aria-label="Number of leaf bags" required>
+                  <button type="button" data-step="1" aria-label="One more bag">+</button>
+                </div>
+                <p class="hint">One bag is a full 30-gallon bag of leaves. Not sure? Take your best guess. We'll count the bags when we're done and confirm the final price.</p>
+              </div>
+              <label class="field">
+                <span>Anything else we should know? <em class="optional">(optional)</em></span>
+                <textarea name="Comments" rows="3"></textarea>
+              </label>
+            </fieldset>
+            <fieldset>
+              <legend>How would you like to pay?</legend>
+              <div class="choices" data-choices="payment"></div>
+            </fieldset>
+          </div>
+          <aside class="summary">
+            <h3>Your estimate</h3>
+            <dl class="summary-lines"></dl>
+            <p class="summary-total"><span></span><strong></strong></p>
+            <p class="summary-note"></p>
+            <button class="btn btn-block" type="submit">Send request</button>
+            <p class="form-status" role="status" aria-live="polite"></p>
+          </aside>
+        </form>
+      </div>
+    </section>
+
+    <!-- ============================= WINTER ============================= -->
+    <section class="page" id="winter" data-theme="winter" data-title="Winter">
+      <div class="season-hero">
+        <svg class="icon hero-art" aria-hidden="true"><use href="#i-snow"/></svg>
+        <div class="container">
+          <p class="eyebrow"><svg class="icon"><use href="#i-snow"/></svg>Winter</p>
+          <h1>Snow shoveling</h1>
+          <!-- DRAFT: Adrian will write the real winter description here. -->
+          <p class="lead">When it snows, we shovel your driveway and sidewalk, clear a path to your door, and put down snow melt so everything stays safe.</p>
+          <p class="hero-links">
+            <span class="price-chip">From <span data-price="winter.driveway.1.price">$20</span></span>
+            <a class="btn btn-ghost" href="#season-pass">Every storm covered: <span data-price="seasonPass.price">$200</span> Season Pass <svg class="icon"><use href="#i-arrow"/></svg></a>
+          </p>
+        </div>
+      </div>
+      <div class="container">
+        <form class="booking" data-kind="winter">
+          <input type="hidden" name="form" value="Winter">
+          <div class="booking-main">
+            <h2>Request snow shoveling</h2>
+            <div data-contact-fields></div>
+            <fieldset>
+              <legend>Your job</legend>
+              <label class="field">
+                <span>Date of service</span>
+                <input type="date" name="Date" required>
+              </label>
+              <div class="field">
+                <span>Expected snowfall</span>
+                <div class="choices" data-choices="snowfall"></div>
+              </div>
+              <div class="field">
+                <span>Parking spaces / driveway</span>
+                <div class="choices" data-choices="driveway"></div>
+              </div>
+              <div class="field">
+                <span>Sidewalk</span>
+                <div class="choices" data-choices="sidewalk"></div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend>Add-ons</legend>
+              <div class="addon included">
+                <svg class="icon"><use href="#i-check"/></svg>
+                <span><b>Paths to your door</b>Free with every order</span>
+              </div>
+              <label class="addon">
+                <input type="checkbox" name="Snow melt" value="Yes">
+                <span><b>Snow melt (salt)</b>Free on orders over <span data-price="winter.snowMelt.freeOver">$50</span>, otherwise <span data-price="winter.snowMelt.price">$5</span></span>
+              </label>
+              <label class="field">
+                <span>Comments <em class="optional">(optional)</em></span>
+                <textarea name="Comments" rows="3"></textarea>
+              </label>
+            </fieldset>
+            <fieldset>
+              <legend>How would you like to pay?</legend>
+              <div class="choices" data-choices="payment"></div>
+            </fieldset>
+          </div>
+          <aside class="summary">
+            <h3>Your estimate</h3>
+            <dl class="summary-lines"></dl>
+            <p class="summary-total"><span></span><strong></strong></p>
+            <p class="summary-note"></p>
+            <button class="btn btn-block" type="submit">Send request</button>
+            <p class="form-status" role="status" aria-live="polite"></p>
+          </aside>
+        </form>
+      </div>
+    </section>
+
+    <!-- ========================= SPRING & SUMMER ========================= -->
+    <section class="page" id="spring-summer" data-theme="spring" data-title="Spring & Summer">
+      <div class="season-hero">
+        <svg class="icon hero-art" aria-hidden="true"><use href="#i-sprout"/></svg>
+        <div class="container">
+          <p class="eyebrow"><svg class="icon"><use href="#i-sprout"/></svg>Spring &amp; Summer</p>
+          <h1>Gardening</h1>
+          <!-- DRAFT: Adrian will write the real spring & summer description here. -->
+          <p class="lead">From weeding and planting to keeping everything watered, we'll help your garden look its best. Tell us what you need and we'll send you a quote.</p>
+          <p class="price-chip">Free quotes</p>
+        </div>
+      </div>
+      <div class="container">
+        <form class="booking" data-kind="spring">
+          <input type="hidden" name="form" value="Spring & Summer">
+          <div class="booking-main">
+            <h2>Request gardening help</h2>
+            <div data-contact-fields></div>
+            <fieldset>
+              <legend>Your job</legend>
+              <label class="field">
+                <span>Date of service</span>
+                <input type="date" name="Date" required>
+              </label>
+              <label class="field">
+                <span>What do you need?</span>
+                <textarea name="Request" rows="4" required placeholder="For example: weed the front garden beds and plant six flowers."></textarea>
+              </label>
+            </fieldset>
+            <fieldset>
+              <legend>Add-ons</legend>
+              <label class="addon">
+                <input type="checkbox" name="Watering" value="Yes">
+                <span><b>Watering</b>Free!</span>
+              </label>
+            </fieldset>
+            <fieldset>
+              <legend>How would you like to pay?</legend>
+              <div class="choices" data-choices="payment"></div>
+            </fieldset>
+          </div>
+          <aside class="summary">
+            <h3>Your request</h3>
+            <dl class="summary-lines"></dl>
+            <p class="summary-total"><span></span><strong></strong></p>
+            <p class="summary-note"></p>
+            <button class="btn btn-block" type="submit">Send request</button>
+            <p class="form-status" role="status" aria-live="polite"></p>
+          </aside>
+        </form>
+      </div>
+    </section>
+
   </main>
-  <footer>&copy; 2026 A Squared Services</footer>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>&copy; 2026 A Squared Services</span>
+      <nav aria-label="Footer">
+        <a href="#fall">Fall</a>
+        <a href="#winter">Winter</a>
+        <a href="#spring-summer">Spring &amp; Summer</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- The "Your info" part of every form. app.js copies it into each [data-contact-fields]. -->
+  <template id="contact-fields">
+    <fieldset>
+      <legend>Your info</legend>
+      <label class="field">
+        <span>Name</span>
+        <input name="Name" autocomplete="name" required>
+      </label>
+      <div class="field-row">
+        <label class="field">
+          <span>Phone</span>
+          <input type="tel" name="Phone" autocomplete="tel">
+        </label>
+        <label class="field">
+          <span>Email</span>
+          <input type="email" name="Email" autocomplete="email">
+        </label>
+      </div>
+      <p class="hint">Give us a phone number or an email (or both) so we can confirm.</p>
+      <label class="field">
+        <span>Address</span>
+        <input name="Address" autocomplete="street-address" required>
+      </label>
+      <!-- Spam trap: hidden from people, but bots fill it in. -->
+      <label class="hp" aria-hidden="true">Leave this empty <input name="website" tabindex="-1" autocomplete="off"></label>
+    </fieldset>
+  </template>
+
 </body>
 </html>
