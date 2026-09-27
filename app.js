@@ -37,23 +37,26 @@
       bar.style.flexGrow = to[i];
     });
     if (!previousTheme || !stripe.animate || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    // Between Fall and Spring, the bars pass smoothly through the home-page
+    // layout: the blue Winter bar grows in the middle, reaches a third of the
+    // width halfway through (when all three are equal), and shrinks away
+    // again, so you can see you're passing through Winter.
+    const acrossWinter =
+      (previousTheme === "fall" && theme === "spring") || (previousTheme === "spring" && theme === "fall");
+    const timing = acrossWinter ? { duration: 1600, easing: "ease-in-out" } : { duration: 1400, easing: BOUNCE };
     stripeBars.forEach((bar, i) => {
-      if (Math.abs(from[i] - to[i]) > 0.001) {
-        bar.animate([{ flexGrow: from[i] }, { flexGrow: to[i] }], { duration: 1400, easing: BOUNCE });
-      }
+      if (Math.abs(from[i] - to[i]) > 0.001) bar.animate([{ flexGrow: from[i] }, { flexGrow: to[i] }], timing);
     });
-    // Between Fall and Spring, the blue Winter bar shows up in the middle at
-    // its home-page size (a third), as if it's being pushed out of the way.
-    if ((previousTheme === "fall" && theme === "spring") || (previousTheme === "spring" && theme === "fall")) {
+    if (acrossWinter) {
+      const middle = (from[0] + from[2]) / 2; // makes blue exactly a third at the halfway point
       $(".winter", stripe).animate(
         [
-          { flexGrow: 0 },
-          { flexGrow: 0.5, offset: 0.2 },
-          { flexGrow: 0.5, offset: 0.3 },
-          { flexGrow: 0, offset: 0.6 },
+          { flexGrow: 0, easing: "ease-in-out" },
+          { flexGrow: middle, offset: 0.5, easing: "ease-in-out" },
           { flexGrow: 0 },
         ],
-        { duration: 1400, easing: "ease-in-out", composite: "add" }
+        { duration: 1600, composite: "add" }
       );
     }
   }
@@ -101,11 +104,11 @@
   // ------------------------------------------ Season banner animation
 
   // A few snowflakes (Winter), leaves (Fall), or petals (Spring & Summer)
-  // drifting across each season's banner. The motion is in style.css.
+  // drifting down each season's banner. The motion is in style.css.
   const PARTICLES = {
     winter: { kind: "snow", size: [10, 22] },
     fall: { kind: "leaf", size: [14, 26] },
-    spring: { kind: "petal", size: [6, 12] },
+    spring: { kind: "petal", size: [13, 20] },
   };
   $$(".season-hero").forEach((hero) => {
     const setup = PARTICLES[hero.closest(".page").dataset.theme];
@@ -130,7 +133,7 @@
       ].join(";");
       const inner = document.createElement("span");
       inner.className = "particle-inner";
-      if (setup.kind !== "petal") inner.innerHTML = '<svg class="icon"><use href="#i-' + setup.kind + '"/></svg>';
+      inner.innerHTML = '<svg class="icon"><use href="#i-' + setup.kind + '"/></svg>';
       particle.append(inner);
       layer.append(particle);
     }
@@ -204,7 +207,7 @@
     }),
     driveway: () => ({
       name: "Driveway",
-      checked: 1,
+      checked: -1, // nothing picked to start
       options: C.winter.driveway.map((o) => ({ value: o.label, note: money(o.price) })),
     }),
     cars: () => ({

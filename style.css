@@ -15,21 +15,22 @@
   --fall: #e8590c;
   --winter: #1c7ed6;
   --spring: #37b24d;
-  --brand: #2f5bea;
+  --brand: #7048e8;
 
   /* Logo colors: the "A" and the "2". Each season below has its own. */
-  --logo-a: #16296e;
-  --logo-2: #3d8bff;
+  --logo-a: #3f1f8f;
+  --logo-2: #9775fa;
 }
 
+/* Home: purple, so it stands apart from Winter's blue */
 [data-theme="home"] {
-  --accent: #2f5bea;
-  --accent-dark: #1d3fae;
-  --tint: #edf2ff;
-  --bg: #f6f7fb;
-  --hero: linear-gradient(135deg, #16296e 0%, #1d3fae 55%, #2f5bea 100%);
-  --logo-a: #16296e;
-  --logo-2: #3d8bff;
+  --accent: #7950f2;
+  --accent-dark: #5f3dc4;
+  --tint: #f3f0ff;
+  --bg: #f8f7fd;
+  --hero: linear-gradient(135deg, #2b1a66 0%, #5f3dc4 55%, #7950f2 100%);
+  --logo-a: #3f1f8f;
+  --logo-2: #9775fa;
 }
 
 /* Fall: red and orange */
@@ -355,26 +356,26 @@ h3 {
 }
 
 .petal .particle {
-  animation-name: particle-rise;
+  color: #fcc2d7;
+  opacity: calc(var(--o) + 0.25);
+}
+
+.petal .particle:nth-child(4n + 1) { color: #ffdeeb; }
+.petal .particle:nth-child(4n + 2) { color: #fff3bf; }
+.petal .particle:nth-child(4n + 3) { color: #ffec99; }
+
+.petal .particle .icon {
+  fill: currentColor;
+  stroke: none;
 }
 
 .petal .particle-inner {
-  border-radius: 70% 0 70% 0;
-  background: #fff3bf;
-}
-
-.petal .particle:nth-child(odd) .particle-inner {
-  background: #ffe066;
+  animation-name: particle-tumble;
 }
 
 @keyframes particle-fall {
   from { top: -12%; }
   to { top: 108%; }
-}
-
-@keyframes particle-rise {
-  from { top: 108%; }
-  to { top: -12%; }
 }
 
 @keyframes particle-sway {
@@ -444,7 +445,7 @@ h3 {
 
 .hero-logo {
   --logo-a: #fff;
-  --logo-2: #74b3ff;
+  --logo-2: #d0bfff;
   order: 2;
   width: 250px;
   height: 239px;
