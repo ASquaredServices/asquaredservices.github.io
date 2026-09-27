@@ -33,10 +33,25 @@
       const details = $("details", target);
       if (details) details.open = true;
       target.scrollIntoView();
+      // Flash the section, since the page may not move at all if it's
+      // already on screen (like Contact at the bottom of the home page).
+      target.classList.remove("flash");
+      void target.offsetWidth; // restarts the animation
+      target.classList.add("flash");
     } else {
       window.scrollTo(0, 0);
     }
   }
+
+  // Tapping a link to where you already are (like "Contact" twice) doesn't
+  // change the address, so the browser does nothing. Handle it here.
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest('a[href^="#"]');
+    if (link && link.hash === location.hash) {
+      event.preventDefault();
+      showPage();
+    }
+  });
 
   // ------------------------------------------------ Filling in the page
 

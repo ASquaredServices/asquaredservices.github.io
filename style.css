@@ -733,6 +733,25 @@ h3 {
   margin: 0;
 }
 
+/* Brief highlight after jumping to Contact or the Season Pass */
+.flash .contact-card,
+.pass.flash {
+  outline: 4px solid transparent;
+  outline-offset: 4px;
+  animation: flash 2s ease-out;
+}
+
+@keyframes flash {
+  0%,
+  40% {
+    outline-color: var(--accent);
+  }
+
+  100% {
+    outline-color: transparent;
+  }
+}
+
 /* ----------------------------------------------------------- Forms */
 
 .booking {
