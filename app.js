@@ -55,15 +55,10 @@
 
   // ------------------------------------------------ Filling in the page
 
-  // Every [data-price="fall.pricePerBag"] shows that price from config.js,
-  // and every [data-text="seasonPass.season"] shows that text.
+  // Every [data-price="fall.pricePerBag"] shows that price from config.js.
   $$("[data-price]").forEach((el) => {
     const value = lookup(el.dataset.price);
     if (typeof value === "number") el.textContent = money(value);
-  });
-  $$("[data-text]").forEach((el) => {
-    const value = lookup(el.dataset.text);
-    if (value != null) el.textContent = value;
   });
 
   function renderContact() {
@@ -286,10 +281,10 @@
 
     pass() {
       return {
-        lines: [["Winter Season Pass (" + C.seasonPass.season + ")", money(C.seasonPass.price)]],
+        lines: [["Winter Season Pass", money(C.seasonPass.price)]],
         totalLabel: "Total",
         total: money(C.seasonPass.price),
-        note: "Covers every snowstorm of the " + C.seasonPass.season + " winter. Little to no snow? We'll refund part of it.",
+        note: "Covers every snowstorm this winter. Little to no snow? We'll refund part of it.",
       };
     },
   };

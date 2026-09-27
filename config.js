@@ -13,7 +13,7 @@ window.A2_CONFIG = {
 
   // Shown on the home page and in form messages. Leave "" to hide.
   contact: {
-    phone: "", // e.g. "(617) 555-0123"
+    phone: "617-682-6164",
     email: "adriandthaler@icloud.com",
   },
 
@@ -70,8 +70,5 @@ window.A2_CONFIG = {
 
   seasonPass: {
     price: 200,
-    // Which winter the pass is for. It runs from the first snowstorm that
-    // stays overnight to the last one.
-    season: "2026–27",
   },
 };
