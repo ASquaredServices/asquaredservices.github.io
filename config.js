@@ -49,11 +49,17 @@ window.A2_CONFIG = {
       { label: "None", price: 0 },
       { label: "1 space", price: 20 },
       { label: "2 spaces", price: 30 },
-      { label: "3+ spaces", price: 40 },
+      { label: "3 spaces", price: 40 },
     ],
     sidewalk: [
       { label: "None", price: 0 },
       { label: "Sidewalk", price: 10 },
+    ],
+    // Add-on: clearing snow off cars. Not affected by the snowfall bonus.
+    cars: [
+      { label: "None", price: 0 },
+      { label: "1 car", price: 10 },
+      { label: "2 cars", price: 20 },
     ],
     // "extra" is added on top of the base cost: 0.5 means +50%.
     // "Not sure" (extra: null) means we measure the snow on the day.

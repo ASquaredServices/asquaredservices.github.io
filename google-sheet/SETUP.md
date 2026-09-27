@@ -19,8 +19,7 @@ You don't need to make any tabs or columns. The first time each form sends a req
 1. In the spreadsheet menu, click **Extensions → Apps Script**.
 2. Delete the few lines of sample code that are there.
 3. Copy everything in [Code.gs](Code.gs) and paste it in.
-4. Optional: to send notifications to a different email (or to more than one), put it between the quotes on the `NOTIFY_EMAIL` line. Leaving it empty sends them to the Gmail account that owns the sheet. To get alerts on your phone, use the Gmail app, add the Gmail account to your iPhone's Mail app, or put your phone's usual email address here.
-5. Click the **Save** icon.
+4. Click the **Save** icon.
 
 ## 3. Test it
 
@@ -29,7 +28,7 @@ You don't need to make any tabs or columns. The first time each form sends a req
 3. The first time, Google asks you to authorize the script:
    - Click **Review permissions** and pick your account.
    - You'll see "Google hasn't verified this app." That's expected, because it's your own script. Click **Advanced**, then **Go to (project name) (unsafe)**, then **Allow**.
-4. The log at the bottom should say "It worked!" The sheet should have a new **Test** tab, and you should get a test email. You can delete the Test tab afterward.
+4. The log at the bottom should say "It worked!" and list who got the test email. The sheet should have new **Test** and **Settings** tabs, and you should get a test email. You can delete the Test tab afterward (keep Settings).
 
 Don't click Run with **doPost** picked. It only runs when the website sends a form, so running it by hand just gives an error.
 
@@ -51,6 +50,12 @@ To check that it worked, paste the URL into a browser. You should see "The A Squ
 Put the URL in [config.js](../config.js) between the quotes on the `formEndpoint:` line, then commit and push to `main`. Or just send the URL to your dad and we'll do it.
 
 Then send yourself a test request from the website. A new tab should appear in the sheet, and you should get an email.
+
+## Who gets the emails
+
+The **Settings** tab, cell **B1**, lists who gets an email for each new request. To add someone, type their address after yours with a comma in between, like `you@gmail.com, friend@example.com`. Changes work right away, with no need to touch the script. If B1 is empty, emails go to the Google account that owns the sheet.
+
+To get alerts on your phone, use the Gmail app, or add the Gmail account to your iPhone's Mail app.
 
 ## Using the sheet
 

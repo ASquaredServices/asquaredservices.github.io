@@ -61,28 +61,34 @@
     if (typeof value === "number") el.textContent = money(value);
   });
 
+  // The phone number gets separate Call and Text buttons, since tapping a
+  // number only offers to call (and opens FaceTime on a Mac).
   function renderContact() {
-    const links = [];
-    if (C.contact.phone) {
+    const link = (href, text, className) => {
       const a = document.createElement("a");
-      a.href = "tel:" + C.contact.phone.replace(/[^\d+]/g, "");
-      a.textContent = C.contact.phone;
-      links.push(a);
+      a.href = href;
+      a.textContent = text;
+      if (className) a.className = className;
+      return a;
+    };
+    const rows = [];
+    if (C.contact.phone) {
+      const number = C.contact.phone.replace(/[^\d+]/g, "");
+      const row = document.createElement("div");
+      row.className = "contact-row";
+      const text = document.createElement("span");
+      text.textContent = C.contact.phone;
+      row.append(text, link("tel:" + number, "Call", "contact-btn"), link("sms:" + number, "Text", "contact-btn"));
+      rows.push(row);
     }
     if (C.contact.email) {
-      const a = document.createElement("a");
-      a.href = "mailto:" + C.contact.email;
-      a.textContent = C.contact.email;
-      links.push(a);
+      const row = document.createElement("div");
+      row.className = "contact-row";
+      row.append(link("mailto:" + C.contact.email, C.contact.email));
+      rows.push(row);
     }
-    if (!links.length) return;
-    $$("[data-contact]").forEach((el) => {
-      el.replaceChildren();
-      links.forEach((link, i) => {
-        if (i) el.append(document.createElement("br"));
-        el.append(link.cloneNode(true));
-      });
-    });
+    if (!rows.length) return;
+    $$("[data-contact]").forEach((el) => el.replaceChildren(...rows.map((row) => row.cloneNode(true))));
   }
 
   function contactSentence() {
@@ -110,6 +116,11 @@
       name: "Driveway",
       checked: 1,
       options: C.winter.driveway.map((o) => ({ value: o.label, note: money(o.price) })),
+    }),
+    cars: () => ({
+      name: "Cars",
+      checked: 0,
+      options: C.winter.cars.map((o) => ({ value: o.label, note: o.price ? "+" + money(o.price) : "$0" })),
     }),
     sidewalk: () => ({
       name: "Sidewalk",
@@ -151,7 +162,7 @@
     const form = group.closest("form");
     const otherBox = document.createElement("label");
     otherBox.className = "field other-pay";
-    otherBox.innerHTML = '<span>Which payment method would you like?</span>';
+    otherBox.innerHTML = '<span>Which Payment Method Would You Like?</span>';
     const otherInput = document.createElement("input");
     otherInput.name = "Other payment";
     otherInput.placeholder = "For example: PayPal, Zelle, or check";
@@ -216,6 +227,7 @@
       const driveway = find(C.winter.driveway, f.Driveway.value);
       const sidewalk = find(C.winter.sidewalk, f.Sidewalk.value);
       const snowfall = find(C.winter.snowfall, f.Snowfall.value) || C.winter.snowfall[0];
+      const cars = find(C.winter.cars, f.Cars.value) || C.winter.cars[0];
       const base = (driveway ? driveway.price : 0) + (sidewalk ? sidewalk.price : 0);
       if (!base) {
         return {
@@ -235,31 +247,35 @@
       const lines = [];
       if (driveway && driveway.price) lines.push(["Driveway (" + driveway.label + ")", money(driveway.price)]);
       if (sidewalk && sidewalk.price) lines.push(["Sidewalk", money(sidewalk.price)]);
+      const carLine = cars.price ? ["Clear snow off " + cars.label, money(cars.price)] : null;
 
       // "Not sure": show the range from the least to the most snow.
       if (snowfall.extra === null) {
         const maxExtra = Math.max(...C.winter.snowfall.map((o) => o.extra || 0));
-        const low = withMelt(base);
-        const high = withMelt(base * (1 + maxExtra));
+        const lowest = base + cars.price;
+        const low = withMelt(lowest);
+        const high = withMelt(base * (1 + maxExtra) + cars.price);
         lines.push(["Snowfall", "Measured on the day"]);
-        lines.push(["Paths to your door", "Free"]);
-        if (wantsMelt) lines.push(["Snow melt", base >= C.winter.snowMelt.freeFrom ? "Free" : "Depends on total"]);
+        if (carLine) lines.push(carLine);
+        lines.push(["Paths to Your Door", "Free"]);
+        if (wantsMelt) lines.push(["Snow Melt", lowest >= C.winter.snowMelt.freeFrom ? "Free" : "Depends on total"]);
         return {
           lines,
           totalLabel: "Estimated Range",
           total: low === high ? money(low) : money(low) + "–" + money(high),
           note: "On the day, we'll measure the snowfall and text or email you the final price.",
-          meltFree: base >= C.winter.snowMelt.freeFrom,
-          subtotal: base,
+          meltFree: lowest >= C.winter.snowMelt.freeFrom,
+          subtotal: lowest,
         };
       }
 
       const snowCost = base * snowfall.extra;
-      const subtotal = base + snowCost;
+      const subtotal = base + snowCost + cars.price;
       const meltFree = subtotal >= C.winter.snowMelt.freeFrom;
       lines.push(["Snowfall " + snowfall.label + " (+" + percent(snowfall.extra) + ")", money(snowCost)]);
-      lines.push(["Paths to your door", "Free"]);
-      if (wantsMelt) lines.push(["Snow melt", meltFree ? "Free" : money(C.winter.snowMelt.price)]);
+      if (carLine) lines.push(carLine);
+      lines.push(["Paths to Your Door", "Free"]);
+      if (wantsMelt) lines.push(["Snow Melt", meltFree ? "Free" : money(C.winter.snowMelt.price)]);
       return {
         lines,
         total: money(withMelt(subtotal)),

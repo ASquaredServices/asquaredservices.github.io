@@ -60,7 +60,6 @@
           <div>
             <p class="eyebrow">Lilac Court &middot; Cambridge, MA</p>
             <h1>Yard &amp; Snow Help from Two Neighborhood Kids</h1>
-            <!-- DRAFT: Adrian will write the real description of A² here. -->
             <p class="lead">We want to help our community all year: raking leaves in the fall, shoveling snow in the winter, and gardening in the spring and summer.</p>
             <div class="hero-actions">
             <a class="btn btn-light" data-theme="fall" href="#fall"><svg class="icon"><use href="#i-leaf"/></svg>Fall</a>
@@ -156,7 +155,7 @@
                 <fieldset>
                   <legend>Anything Else?</legend>
                   <label class="field">
-                    <span>Anything we should know? <em class="optional">(optional)</em></span>
+                    <span>Anything We Should Know? <em class="optional">(optional)</em></span>
                     <textarea name="Comments" rows="3" placeholder="For example: where you park, or a side path you'd like cleared."></textarea>
                   </label>
                 </fieldset>
@@ -190,7 +189,7 @@
           <h2>Contact Us</h2>
           <div class="contact-card">
             <!-- Contact info comes from config.js -->
-            <p data-contact>Contact info coming soon.</p>
+            <div data-contact>Contact info coming soon.</div>
           </div>
         </section>
       </div>
@@ -216,11 +215,11 @@
             <fieldset>
               <legend>Your Job</legend>
               <label class="field">
-                <span>Date of service</span>
+                <span>Date of Service</span>
                 <input type="date" name="Date" required>
               </label>
               <div class="field">
-                <span>Estimated number of leaf bags</span>
+                <span>Estimated Number of Leaf Bags</span>
                 <div class="stepper">
                   <button type="button" data-step="-1" aria-label="One fewer bag">&minus;</button>
                   <input type="number" name="Bags" value="1" min="1" max="99" inputmode="numeric" aria-label="Number of leaf bags" required>
@@ -229,7 +228,7 @@
                 <p class="hint">One bag is a full 30-gallon bag of leaves. Not sure? Take your best guess. We'll count the bags when we're done and confirm the final price.</p>
               </div>
               <label class="field">
-                <span>Anything else we should know? <em class="optional">(optional)</em></span>
+                <span>Anything Else We Should Know? <em class="optional">(optional)</em></span>
                 <textarea name="Comments" rows="3"></textarea>
               </label>
             </fieldset>
@@ -257,7 +256,6 @@
         <div class="container">
           <p class="eyebrow"><svg class="icon"><use href="#i-snow"/></svg>Winter</p>
           <h1>Snow Shoveling</h1>
-          <!-- DRAFT: ending reworded per issue #4; Adrian may still rewrite this. -->
           <p class="lead">When it snows, we shovel your driveway and sidewalk, clear a path to your door, and can put down snow melt to help keep ice from forming.</p>
           <p class="hero-links">
             <span class="price-chip">From <span data-price="winter.driveway.1.price">$20</span></span>
@@ -274,17 +272,18 @@
             <fieldset>
               <legend>Your Job</legend>
               <label class="field">
-                <span>Date of service</span>
+                <span>Date of Service</span>
                 <input type="date" name="Date" required>
               </label>
               <div class="field">
-                <span>Expected snowfall</span>
+                <span>Expected Snowfall</span>
                 <div class="choices" data-choices="snowfall"></div>
                 <p class="hint">Go by the forecast. It's only an estimate: on the day, we'll measure the actual snowfall and adjust the price to match. Not sure? Pick &ldquo;Not sure&rdquo; and we'll price it on the day.</p>
               </div>
               <div class="field">
-                <span>Parking spaces / driveway</span>
+                <span>Parking Spaces / Driveway</span>
                 <div class="choices" data-choices="driveway"></div>
+                <p class="hint">More than 3 spaces? Pick 3 and tell us in the comments.</p>
               </div>
               <div class="field">
                 <span>Sidewalk</span>
@@ -295,14 +294,19 @@
               <legend>Add-Ons</legend>
               <div class="addon included">
                 <svg class="icon"><use href="#i-check"/></svg>
-                <span><b>Paths to your door</b>Free with every order</span>
+                <span><b>Paths to Your Door</b>Free with every order</span>
               </div>
               <!-- The badge and message here are updated by app.js as the order changes. -->
               <label class="addon melt">
                 <input type="checkbox" name="Snow melt" value="Yes">
-                <span><b>Snow melt (salt)</b><span data-melt-message>Free on orders of <span data-price="winter.snowMelt.freeFrom">$50</span> or more, otherwise <span data-price="winter.snowMelt.price">$5</span></span></span>
+                <span><b>Snow Melt (Salt)</b><span data-melt-message>Free on orders of <span data-price="winter.snowMelt.freeFrom">$50</span> or more, otherwise <span data-price="winter.snowMelt.price">$5</span></span></span>
                 <span class="melt-badge" data-melt-badge></span>
               </label>
+              <div class="field addon-field">
+                <span>Clear Snow off Cars <em class="optional">(<span data-price="winter.cars.1.price">$10</span> per car)</em></span>
+                <div class="choices" data-choices="cars"></div>
+                <p class="hint">More than 2 cars? Tell us in the comments.</p>
+              </div>
               <label class="field">
                 <span>Comments <em class="optional">(optional)</em></span>
                 <textarea name="Comments" rows="3"></textarea>
@@ -345,11 +349,11 @@
             <fieldset>
               <legend>Your Job</legend>
               <label class="field">
-                <span>Date of service</span>
+                <span>Date of Service</span>
                 <input type="date" name="Date" required>
               </label>
               <label class="field">
-                <span>What do you need?</span>
+                <span>What Do You Need?</span>
                 <textarea name="Request" rows="4" required placeholder="For example: weed the front garden beds and plant six flowers."></textarea>
               </label>
             </fieldset>
@@ -360,7 +364,7 @@
                 <span><b>Watering</b>Free!</span>
               </label>
               <label class="field">
-                <span>Anything else we should know? <em class="optional">(optional)</em></span>
+                <span>Anything Else We Should Know? <em class="optional">(optional)</em></span>
                 <textarea name="Comments" rows="3"></textarea>
               </label>
             </fieldset>
