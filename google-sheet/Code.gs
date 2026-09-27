@@ -65,20 +65,29 @@ function doGet() {
 }
 
 function saveRow_(formName, fields, data) {
-  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
-  const sheet = spreadsheet.getSheetByName(formName) || spreadsheet.insertSheet(formName);
+  const sheet = findSheet_(formName);
 
   // The first row holds the column names. New fields get new columns.
+  // Columns you add yourself (like "Paid?") are left blank for new rows.
   const headers = sheet.getLastColumn() > 0
     ? sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0]
-    : ["Received"];
-  fields.forEach((field) => {
+    : [];
+  ["Received"].concat(fields).forEach((field) => {
     if (!headers.includes(field)) headers.push(field);
   });
   sheet.getRange(1, 1, 1, headers.length).setValues([headers]).setFontWeight("bold");
   sheet.setFrozenRows(1);
 
   sheet.appendRow(headers.map((header) => (header === "Received" ? new Date() : asText_(data[header]))));
+}
+
+// Finds the tab for a form, even if its name is capitalized or punctuated
+// differently ("spring/summer" matches "Spring & Summer"). Makes it if needed.
+function findSheet_(formName) {
+  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  const simplify = (name) => String(name).toLowerCase().replace(/\band\b|[^a-z0-9]/g, "");
+  const match = spreadsheet.getSheets().find((sheet) => simplify(sheet.getName()) === simplify(formName));
+  return match || spreadsheet.insertSheet(formName);
 }
 
 function notify_(formName, fields, data) {

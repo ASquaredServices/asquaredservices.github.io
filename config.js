@@ -78,5 +78,8 @@ window.A2_CONFIG = {
 
   seasonPass: {
     price: 200,
+    // Which winter the pass is for. It runs from the first snowstorm that
+    // stays overnight to the last one.
+    season: "2026–27",
   },
 };

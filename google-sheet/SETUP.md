@@ -12,6 +12,8 @@ This takes about 10 minutes and only needs to be done once.
 1. Sign in to the Google account that should own the requests (ideally the A Squared Services business account).
 2. Go to [sheets.new](https://sheets.new) to make a new spreadsheet. Name it something like **A2 Requests**.
 
+You don't need to make any tabs or columns. The first time each form sends a request, the script makes its tab (**Fall**, **Winter**, **Spring & Summer**, **Season Pass**) with the column names in row 1. If you already made tabs for these, it uses them. Capitalization and punctuation don't matter, so a tab called "spring/summer" works too.
+
 ## 2. Add the script
 
 1. In the spreadsheet menu, click **Extensions → Apps Script**.
@@ -49,6 +51,12 @@ To check that it worked, paste the URL into a browser. You should see "The A Squ
 Put the URL in [config.js](../config.js) between the quotes on the `formEndpoint:` line, then commit and push to `main`. Or just send the URL to your dad and we'll do it.
 
 Then send yourself a test request from the website. A new tab should appear in the sheet, and you should get an email.
+
+## Using the sheet
+
+- Change colors, column widths, and sorting however you like.
+- Add your own columns to the right, like **Done?** or **Paid?**. New requests leave them blank for you to fill in.
+- Don't rename the column names the script made in row 1. If you do, it adds a new column with the original name.
 
 ## Changing the script later
 
