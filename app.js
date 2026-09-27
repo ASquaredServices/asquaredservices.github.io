@@ -239,7 +239,7 @@
         if (wantsMelt) lines.push(["Snow melt", base >= C.winter.snowMelt.freeFrom ? "Free" : "Depends on total"]);
         return {
           lines,
-          totalLabel: "Estimated range",
+          totalLabel: "Estimated Range",
           total: low === high ? money(low) : money(low) + "–" + money(high),
           note: "On the day, we'll measure the snowfall and text or email you the final price.",
           meltFree: base >= C.winter.snowMelt.freeFrom,
@@ -297,7 +297,7 @@
         return row;
       })
     );
-    $(".summary-total span", form).textContent = est.totalLabel || "Estimated total";
+    $(".summary-total span", form).textContent = est.totalLabel || "Estimated Total";
     const total = $(".summary-total strong", form);
     total.textContent = est.total;
     total.classList.toggle("is-text", Boolean(est.isText));
