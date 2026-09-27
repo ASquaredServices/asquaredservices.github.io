@@ -51,6 +51,13 @@ Put the URL in [config.js](../config.js) between the quotes on the `formEndpoint
 
 Then send yourself a test request from the website. A new tab should appear in the sheet, and you should get an email.
 
+## The emails
+
+Every request sends two kinds of email:
+
+- **To the customer:** a thank-you with a copy of their request and estimate. It comes from the Google account that owns the sheet, shows up as "A² Services", and replies go to the business email. The business name, email, and phone for these emails are at the top of the script (`BUSINESS`). Each address gets at most 3 of these per hour, so nobody can use the form to flood someone's inbox.
+- **To us:** the customer's details, the request, and the estimate. Hit Reply to email the customer.
+
 ## Who gets the emails
 
 The **Settings** tab, cell **B1**, lists who gets an email for each new request. To add someone, type their address after yours with a comma in between, like `you@gmail.com, friend@example.com`. Changes work right away, with no need to touch the script. If B1 is empty, emails go to the Google account that owns the sheet.

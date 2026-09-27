@@ -61,8 +61,9 @@
     if (typeof value === "number") el.textContent = money(value);
   });
 
-  // The phone number gets separate Call and Text buttons, since tapping a
-  // number only offers to call (and opens FaceTime on a Mac).
+  // The phone number gets separate Call and Text buttons (tapping a number
+  // only offers to call, and opens FaceTime on a Mac), and the email gets
+  // an Email button.
   function renderContact() {
     const link = (href, text, className) => {
       const a = document.createElement("a");
@@ -84,7 +85,9 @@
     if (C.contact.email) {
       const row = document.createElement("div");
       row.className = "contact-row";
-      row.append(link("mailto:" + C.contact.email, C.contact.email));
+      const text = document.createElement("span");
+      text.textContent = C.contact.email;
+      row.append(text, link("mailto:" + C.contact.email, "Email", "contact-btn"));
       rows.push(row);
     }
     if (!rows.length) return;
@@ -265,7 +268,7 @@
           lines,
           totalLabel: "Estimated Range",
           total: low === high ? money(low) : money(low) + "–" + money(high),
-          note: "On the day, we'll measure the snowfall and text or email you the final price.",
+          note: "On the day, we'll measure the snowfall and email you the final price.",
           meltFree: lowest >= C.winter.snowMelt.freeFrom,
           subtotal: lowest,
         };
@@ -293,7 +296,7 @@
         totalLabel: "Total",
         total: "We'll send a quote",
         isText: true,
-        note: "We'll text or email you a quote once we've looked at your request.",
+        note: "We'll email you a quote once we've looked at your request.",
       };
     },
 
@@ -360,14 +363,11 @@
     return /^[\d\s().+-]+$/.test(value) && (digits.length === 10 || (digits.length === 11 && digits[0] === "1"));
   }
 
-  // The form can't be sent until the phone is valid and there's a phone or an email.
+  // The phone is optional, but the form can't be sent with a bad one.
   function checkContact(form) {
     const phone = form.elements.Phone;
     const value = phone.value.trim();
-    let message = "";
-    if (value && !phoneIsValid(value)) message = PHONE_MESSAGE;
-    else if (!value && !form.elements.Email.value.trim()) message = "Please give us a phone number or an email.";
-    phone.setCustomValidity(message);
+    phone.setCustomValidity(value && !phoneIsValid(value) ? PHONE_MESSAGE : "");
   }
 
   function setupPhone(form) {
@@ -440,7 +440,8 @@
       form.reset();
       checkContact(form);
       renderEstimate(form);
-      setStatus(form, "Thanks" + (firstName ? ", " + firstName : "") + "! We got your request and will be in touch soon to confirm.", "success");
+      const copy = result.confirmed ? " and emailed you a copy" : "";
+      setStatus(form, "Thanks" + (firstName ? ", " + firstName : "") + "! We got your request" + copy + ". We'll be in touch soon to confirm.", "success");
     } catch (err) {
       setStatus(form, "Sorry, something went wrong and your request wasn't sent. Please try again." + contactSentence(), "error");
     } finally {

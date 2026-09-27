@@ -28,8 +28,8 @@ window.A2_CONFIG = {
     },
     {
       name: "Venmo",
-      note: "When the job is done, we'll text or email you our Venmo so you can pay.",
-      passNote: "Pay up front: when we confirm your pass, we'll text or email you our Venmo so you can pay.",
+      note: "When the job is done, we'll email you our Venmo so you can pay.",
+      passNote: "Pay up front: when we confirm your pass, we'll email you our Venmo so you can pay.",
     },
     {
       name: "Other",

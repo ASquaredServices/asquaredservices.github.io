@@ -180,7 +180,7 @@
           <h2>How It Works</h2>
           <ol class="steps">
             <li><b>Pick a Season</b>Choose the service you need and fill out the short form.</li>
-            <li><b>We Confirm</b>We'll text or email you to confirm the day and the price.</li>
+            <li><b>We Confirm</b>We'll email you to confirm the day and the price.</li>
             <li><b>We Get It Done</b>We do the work, and you pay the way you picked.</li>
           </ol>
         </section>
@@ -409,16 +409,16 @@
       </label>
       <div class="field-row">
         <label class="field">
-          <span>Phone</span>
+          <span>Email</span>
+          <input type="email" name="Email" autocomplete="email" required>
+        </label>
+        <label class="field">
+          <span>Phone <em class="optional">(optional)</em></span>
           <input type="tel" name="Phone" autocomplete="tel" placeholder="617-555-0123">
           <span class="field-error" data-error-for="Phone"></span>
         </label>
-        <label class="field">
-          <span>Email</span>
-          <input type="email" name="Email" autocomplete="email">
-        </label>
       </div>
-      <p class="hint">Give us a phone number or an email (or both) so we can confirm.</p>
+      <p class="hint">Email is how we'll usually reach you, starting with confirming your request. Your phone number is a backup.</p>
       <label class="field">
         <span>Address</span>
         <input name="Address" autocomplete="street-address" required>
