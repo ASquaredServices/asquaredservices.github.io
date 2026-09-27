@@ -133,6 +133,8 @@
   $$("[data-choices]").forEach((group) => {
     const set = choiceSets[group.dataset.choices]();
     group.setAttribute("role", "radiogroup");
+    group.dataset.count = set.options.length; // for the equal-width rows in style.css
+    group.style.setProperty("--count", set.options.length);
     set.options.forEach((opt, i) => {
       const label = document.createElement("label");
       label.className = "choice";

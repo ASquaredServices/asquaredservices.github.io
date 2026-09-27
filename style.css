@@ -614,6 +614,10 @@ h3 {
 }
 
 @media (max-width: 400px) {
+  .choice b {
+    font-size: 0.95rem;
+  }
+
   .equation {
     gap: 8px;
   }
@@ -981,9 +985,10 @@ textarea:focus {
 
 /* Pill-shaped radio buttons */
 
+/* Every row of choices fills the full width, with equal-size buttons */
 .choices {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(var(--count, 3), minmax(0, 1fr));
   gap: 8px;
 }
 
@@ -1006,9 +1011,9 @@ textarea:focus {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-width: 84px;
+  height: 100%;
   min-height: 48px;
-  padding: 8px 16px;
+  padding: 8px 6px;
   border: 1.5px solid var(--field);
   border-radius: 14px;
   background: #fff;
@@ -1325,15 +1330,13 @@ textarea:focus {
     padding: 22px 18px;
   }
 
-  /* Even two-column rows of choices on phones */
-  .choices {
-    display: grid;
+  /* On phones, 4 or more choices wrap into full-width rows of 2 */
+  .choices:not([data-count="1"], [data-count="2"], [data-count="3"]) {
     grid-template-columns: 1fr 1fr;
   }
 
-  .choice span {
-    min-width: 0;
-    height: 100%;
+  .choices:not([data-count="1"], [data-count="2"], [data-count="3"]) .choice:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
   }
 
   .field-row {

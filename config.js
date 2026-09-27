@@ -49,7 +49,6 @@ window.A2_CONFIG = {
       { label: "None", price: 0 },
       { label: "1 space", price: 20 },
       { label: "2 spaces", price: 30 },
-      { label: "3 spaces", price: 40 },
     ],
     sidewalk: [
       { label: "None", price: 0 },
