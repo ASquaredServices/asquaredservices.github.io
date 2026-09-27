@@ -9,7 +9,7 @@ window.A2_CONFIG = {
   // The Google Apps Script "Web app" link that saves requests to the
   // Google Sheet (see google-sheet/SETUP.md). While this is empty, the
   // forms work but show a note that online booking isn't switched on yet.
-  formEndpoint: "https://script.google.com/macros/s/AKfycbwOG-Yze1UquExP5zQ7O0WVkk7pxdL3B-qwS4kJrnvCRIiW7m1O1G6sYgn_fNpTzX8P9Q/exec",
+  formEndpoint: "https://script.google.com/macros/s/AKfycbyzryEVeuVBUS5qEPAiH1n6NVek3Ipk2cdruEaE4mfFig8IAWzFaIKBV6wCeN5eT0Tr/exec",
 
   // Shown on the home page and in form messages. Leave "" to hide.
   contact: {
