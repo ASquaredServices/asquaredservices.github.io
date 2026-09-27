@@ -150,18 +150,30 @@
     });
   });
 
-  // A note under the payment choices that explains how to pay.
+  // Under the payment choices: a box for "Other" (which method?), and a
+  // note that explains how to pay.
   $$('[data-choices="payment"]').forEach((group) => {
     const form = group.closest("form");
+    const otherBox = document.createElement("label");
+    otherBox.className = "field other-pay";
+    otherBox.innerHTML = '<span>Which payment method would you like?</span>';
+    const otherInput = document.createElement("input");
+    otherInput.name = "Other payment";
+    otherInput.placeholder = "For example: PayPal, Zelle, or check";
+    otherBox.append(otherInput);
     const note = document.createElement("p");
     note.className = "pay-note";
-    group.after(note);
+    group.after(otherBox, note);
     const update = () => {
       const picked = C.paymentMethods.find((m) => m.name === form.elements.Payment.value);
+      const other = Boolean(picked && picked.other);
+      otherBox.hidden = !other;
+      otherInput.disabled = !other; // disabled boxes aren't checked or sent
+      otherInput.required = other;
       if (form.dataset.kind === "pass") {
         note.textContent = picked
           ? picked.passNote
-          : "Paying with Venmo, PayPal, or Zelle? Pay up front. Paying with cash or check? Pay at the first storm.";
+          : "Paying with Venmo? Pay up front. Paying with cash? Pay at the first storm.";
       } else {
         note.textContent = picked ? picked.note : "You pay once the job is done.";
       }

@@ -9,7 +9,7 @@ window.A2_CONFIG = {
   // The Google Apps Script "Web app" link that saves requests to the
   // Google Sheet (see google-sheet/SETUP.md). While this is empty, the
   // forms work but show a note that online booking isn't switched on yet.
-  formEndpoint: "",
+  formEndpoint: "https://script.google.com/macros/s/AKfycbwOG-Yze1UquExP5zQ7O0WVkk7pxdL3B-qwS4kJrnvCRIiW7m1O1G6sYgn_fNpTzX8P9Q/exec",
 
   // Shown on the home page and in form messages. Leave "" to hide.
   contact: {
@@ -18,7 +18,8 @@ window.A2_CONFIG = {
   },
 
   // The notes appear under the payment choices when that option is picked:
-  // "note" on regular orders, "passNote" on the Season Pass.
+  // "note" on regular orders, "passNote" on the Season Pass. An option with
+  // "other: true" also shows a box asking which payment method they'd like.
   paymentMethods: [
     {
       name: "Cash",
@@ -26,24 +27,15 @@ window.A2_CONFIG = {
       passNote: "Pay at the first storm: hand it to us when we come to shovel, or leave it in an envelope marked “A²” and tell us where to find it in the comments.",
     },
     {
-      name: "Check",
-      note: "Pay by check when we finish the job. Hand it to us, or leave it in an envelope marked “A²” and tell us where to find it in the comments.",
-      passNote: "Pay at the first storm: hand us a check when we come to shovel, or leave it in an envelope marked “A²” and tell us where to find it in the comments.",
-    },
-    {
       name: "Venmo",
       note: "When the job is done, we'll text or email you our Venmo so you can pay.",
       passNote: "Pay up front: when we confirm your pass, we'll text or email you our Venmo so you can pay.",
     },
     {
-      name: "PayPal",
-      note: "When the job is done, we'll text or email you our PayPal so you can pay.",
-      passNote: "Pay up front: when we confirm your pass, we'll text or email you our PayPal so you can pay.",
-    },
-    {
-      name: "Zelle",
-      note: "When the job is done, we'll text or email you our Zelle info so you can pay.",
-      passNote: "Pay up front: when we confirm your pass, we'll text or email you our Zelle info so you can pay.",
+      name: "Other",
+      other: true,
+      note: "Tell us how you'd like to pay, and we'll get back to you to work it out.",
+      passNote: "Tell us how you'd like to pay, and we'll work out the details when we confirm your pass.",
     },
   ],
 

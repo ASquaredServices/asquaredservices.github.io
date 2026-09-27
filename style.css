@@ -1169,6 +1169,14 @@ textarea:focus {
   font-weight: 800;
 }
 
+.other-pay {
+  margin: 14px 0 0;
+}
+
+.other-pay[hidden] {
+  display: none;
+}
+
 .pay-note {
   margin: 12px 0 0;
   padding: 10px 14px;
