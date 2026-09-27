@@ -1,0 +1,25 @@
+# Copies every commit on `main` to the `live` branch, which GitHub Pages serves.
+# To stop auto-publishing later, delete this file (or change the trigger).
+name: Publish main to live
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-live
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Fast-forward live to main
+        run: git push origin HEAD:refs/heads/live
