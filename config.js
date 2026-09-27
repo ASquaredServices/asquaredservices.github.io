@@ -14,7 +14,7 @@ window.A2_CONFIG = {
   // Shown on the home page and in form messages. Leave "" to hide.
   contact: {
     phone: "", // e.g. "(617) 555-0123"
-    email: "", // e.g. "asquaredservices@gmail.com"
+    email: "adriandthaler@icloud.com",
   },
 
   // The notes appear under the payment choices when that option is picked:

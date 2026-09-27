@@ -19,7 +19,7 @@ You don't need to make any tabs or columns. The first time each form sends a req
 1. In the spreadsheet menu, click **Extensions → Apps Script**.
 2. Delete the few lines of sample code that are there.
 3. Copy everything in [Code.gs](Code.gs) and paste it in.
-4. Optional: to send notifications to a different email (or to more than one), put it between the quotes on the `NOTIFY_EMAIL` line.
+4. Optional: to send notifications to a different email (or to more than one), put it between the quotes on the `NOTIFY_EMAIL` line. Leaving it empty sends them to the Gmail account that owns the sheet, which is the most reliable. Don't use an iCloud address: Apple blocks these automated emails ("554 5.7.1 [HM08] Message rejected due to local policy"). To get alerts on your phone, use the Gmail app, or add the Gmail account to your iPhone's Mail app.
 5. Click the **Save** icon.
 
 ## 3. Test it
