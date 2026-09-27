@@ -251,7 +251,7 @@
 
       const lines = [];
       if (driveway && driveway.price) lines.push(["Driveway (" + driveway.label + ")", money(driveway.price)]);
-      if (sidewalk && sidewalk.price) lines.push(["Sidewalk", money(sidewalk.price)]);
+      if (sidewalk && sidewalk.price) lines.push(["Sidewalk (" + sidewalk.label.toLowerCase() + ")", money(sidewalk.price)]);
       const carLine = cars.price ? ["Clear snow off " + cars.label, money(cars.price)] : null;
 
       // "Not sure": show the range from the least to the most snow.

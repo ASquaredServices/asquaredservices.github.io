@@ -52,7 +52,8 @@ window.A2_CONFIG = {
     ],
     sidewalk: [
       { label: "None", price: 0 },
-      { label: "Sidewalk", price: 10 },
+      { label: "Small", price: 10 },
+      { label: "Large", price: 20 },
     ],
     // Add-on: clearing snow off cars. Not affected by the snowfall bonus.
     cars: [
@@ -66,6 +67,7 @@ window.A2_CONFIG = {
       { label: "0–4 in", extra: 0 },
       { label: "4–8 in", extra: 0.5 },
       { label: "8–12 in", extra: 1 },
+      { label: "12+ in", extra: 1.5 },
     ],
     // Snow melt is free once the order (before snow melt) reaches "freeFrom"
     // dollars. A $45 order plus $5 snow melt is $50, not free.
