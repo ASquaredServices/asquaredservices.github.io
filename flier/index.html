@@ -44,7 +44,8 @@
       width: 8.5in;
       height: 11in;
       margin: 0 auto;
-      padding: 0.45in 0.5in 0.35in;
+      justify-content: space-between;
+      padding: 0.55in 0.55in;
       overflow: hidden;
       background: #fff;
     }
@@ -76,14 +77,14 @@
     }
 
     .top img {
-      width: 1.35in;
-      height: 1.29in;
+      width: 1.55in;
+      height: 1.48in;
       flex: none;
     }
 
     h1 {
       margin: 0;
-      font-size: 50pt;
+      font-size: 56pt;
       font-weight: 900;
       line-height: 1;
       letter-spacing: -0.01em;
@@ -105,11 +106,11 @@
     }
 
     .intro {
-      margin: 0.24in 0 0;
-      padding: 0.16in 0.22in;
+      margin: 0;
+      padding: 0.18in 0.24in;
       border-left: 0.07in solid #000;
       background: #f2f2f2;
-      font-size: 13.5pt;
+      font-size: 15pt;
       line-height: 1.45;
     }
 
@@ -123,7 +124,6 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 0.2in;
-      margin-top: 0.24in;
     }
 
     .season {
@@ -136,10 +136,10 @@
       display: flex;
       align-items: center;
       gap: 0.1in;
-      padding: 0.12in 0.16in;
+      padding: 0.13in 0.16in;
       background: #000;
       color: #fff;
-      font-size: 10.5pt;
+      font-size: 11pt;
       font-weight: 900;
       letter-spacing: 0.05em;
       text-transform: uppercase;
@@ -152,19 +152,19 @@
     }
 
     .season-body {
-      padding: 0.14in 0.16in 0.18in;
+      padding: 0.16in 0.18in 0.22in;
     }
 
     h2 {
-      margin: 0 0 0.06in;
-      font-size: 17pt;
+      margin: 0 0 0.08in;
+      font-size: 17.5pt;
       font-weight: 900;
       line-height: 1.1;
     }
 
     .season p {
       margin: 0;
-      font-size: 11.5pt;
+      font-size: 13pt;
       line-height: 1.4;
     }
 
@@ -174,21 +174,20 @@
       display: flex;
       align-items: center;
       gap: 0.3in;
-      margin-top: 0.24in;
-      padding: 0.2in 0.3in;
+      padding: 0.3in;
       border: 0.05in solid #000;
       border-radius: 0.2in;
     }
 
     .scan img {
-      width: 2in;
-      height: 2in;
+      width: 2.7in;
+      height: 2.7in;
       flex: none;
     }
 
     .scan-title {
-      margin: 0 0 0.08in;
-      font-size: 27pt;
+      margin: 0 0 0.12in;
+      font-size: 30pt;
       font-weight: 900;
       line-height: 1.05;
     }
@@ -198,7 +197,7 @@
     }
 
     .url {
-      font-size: 15pt;
+      font-size: 16pt;
       font-weight: 900;
       text-decoration: underline;
       text-decoration-thickness: 0.02in;
@@ -206,68 +205,19 @@
     }
 
     .area {
-      margin-top: 0.12in !important;
-      font-size: 12pt;
+      margin-top: 0.16in !important;
+      font-size: 13.5pt;
       font-weight: 700;
     }
 
     .contact {
-      margin-top: 0.06in !important;
-      font-size: 12pt;
+      margin-top: 0.08in !important;
+      font-size: 14pt;
+      line-height: 1.45;
       font-weight: 700;
     }
 
-    .todo {
-      padding: 0 0.04in;
-      border: 1px dashed #000;
-    }
 
-    /* Tear-off tabs */
-
-    .tear {
-      position: relative;
-      display: grid;
-      grid-template-columns: repeat(8, 1fr);
-      height: 1.85in;
-      margin-top: auto;
-      border-top: 1.5px dashed #000;
-    }
-
-    .scissors {
-      position: absolute;
-      top: -0.12in;
-      left: -0.05in;
-      padding: 0 0.04in;
-      background: #fff;
-      font-size: 13pt;
-      line-height: 1;
-    }
-
-    .tab {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.03in;
-      padding: 0.08in 0;
-      writing-mode: vertical-rl;
-      transform: rotate(180deg);
-      white-space: nowrap;
-    }
-
-    .tab + .tab {
-      border-right: 1.5px dashed #000;
-    }
-
-    .tab b {
-      font-size: 12pt;
-      font-weight: 900;
-    }
-
-    .tab span {
-      font-size: 8pt;
-      font-weight: 800;
-    }
   </style>
 </head>
 <body>
@@ -322,18 +272,6 @@
         <p class="contact">Call or text: 617-682-6164<br>Email: adriandthaler@icloud.com</p>
       </div>
     </section>
-
-    <footer class="tear">
-      <span class="scissors">&#9986;</span>
-      <div class="tab"><b>A² Services</b><span>617-682-6164</span><span>asquaredservices.github.io</span></div>
-      <div class="tab"><b>A² Services</b><span>617-682-6164</span><span>asquaredservices.github.io</span></div>
-      <div class="tab"><b>A² Services</b><span>617-682-6164</span><span>asquaredservices.github.io</span></div>
-      <div class="tab"><b>A² Services</b><span>617-682-6164</span><span>asquaredservices.github.io</span></div>
-      <div class="tab"><b>A² Services</b><span>617-682-6164</span><span>asquaredservices.github.io</span></div>
-      <div class="tab"><b>A² Services</b><span>617-682-6164</span><span>asquaredservices.github.io</span></div>
-      <div class="tab"><b>A² Services</b><span>617-682-6164</span><span>asquaredservices.github.io</span></div>
-      <div class="tab"><b>A² Services</b><span>617-682-6164</span><span>asquaredservices.github.io</span></div>
-    </footer>
   </div>
 </body>
 </html>
