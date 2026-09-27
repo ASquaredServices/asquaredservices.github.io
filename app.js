@@ -15,6 +15,18 @@
   // ---------------------------------------------------------------- Tabs
 
   const pages = $$(".page");
+  let lastTheme = null;
+
+  // Going between Fall and Spring, the blue Winter bar at the very top briefly
+  // shows between them, as if it's being pushed out of the way.
+  function bumpMiddleBar() {
+    const bar = $(".season-stripe .winter");
+    if (!bar || !bar.animate || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    bar.animate(
+      [{ flexGrow: 0 }, { flexGrow: 0.1, offset: 0.2 }, { flexGrow: 0, offset: 0.5 }, { flexGrow: 0 }],
+      { duration: 1400, easing: "ease-in-out" }
+    );
+  }
 
   function showPage() {
     const id = decodeURIComponent(location.hash.slice(1));
@@ -22,7 +34,10 @@
     const page = (target && target.closest(".page")) || pages[0];
 
     pages.forEach((p) => p.classList.toggle("active", p === page));
-    document.body.dataset.theme = page.dataset.theme;
+    const theme = page.dataset.theme;
+    if ((lastTheme === "fall" && theme === "spring") || (lastTheme === "spring" && theme === "fall")) bumpMiddleBar();
+    lastTheme = theme;
+    document.body.dataset.theme = theme;
     document.title = page.dataset.title ? page.dataset.title + " · A² Services" : "A² Services";
     $$(".tab").forEach((tab) => {
       if (tab.getAttribute("href") === "#" + page.id) tab.setAttribute("aria-current", "page");
@@ -51,6 +66,45 @@
       event.preventDefault();
       showPage();
     }
+  });
+
+  // ------------------------------------------ Season banner animation
+
+  // A few snowflakes (Winter), leaves (Fall), or petals (Spring & Summer)
+  // drifting across each season's banner. The motion is in style.css.
+  const PARTICLES = {
+    winter: { kind: "snow", size: [10, 22] },
+    fall: { kind: "leaf", size: [14, 26] },
+    spring: { kind: "petal", size: [6, 12] },
+  };
+  $$(".season-hero").forEach((hero) => {
+    const setup = PARTICLES[hero.closest(".page").dataset.theme];
+    if (!setup) return;
+    const rand = (min, max) => min + Math.random() * (max - min);
+    const layer = document.createElement("div");
+    layer.className = "particles " + setup.kind;
+    layer.setAttribute("aria-hidden", "true");
+    const count = window.innerWidth < 600 ? 8 : 12;
+    for (let i = 0; i < count; i++) {
+      const duration = rand(10, 18);
+      const particle = document.createElement("span");
+      particle.className = "particle";
+      particle.style.cssText = [
+        "--x:" + rand(2, 95).toFixed(1) + "%",
+        "--size:" + Math.round(rand(setup.size[0], setup.size[1])) + "px",
+        "--dur:" + duration.toFixed(1) + "s",
+        "--delay:" + (-rand(0, duration)).toFixed(1) + "s", // already mid-way on load
+        "--sway:" + rand(2.5, 4.5).toFixed(1) + "s",
+        "--drift:" + Math.round(rand(12, 36)) + "px",
+        "--o:" + rand(0.35, 0.75).toFixed(2),
+      ].join(";");
+      const inner = document.createElement("span");
+      inner.className = "particle-inner";
+      if (setup.kind !== "petal") inner.innerHTML = '<svg class="icon"><use href="#i-' + setup.kind + '"/></svg>';
+      particle.append(inner);
+      layer.append(particle);
+    }
+    hero.prepend(layer);
   });
 
   // ------------------------------------------------ Filling in the page

@@ -145,9 +145,9 @@ h3 {
 
 .season-stripe span {
   flex: 1 1 0;
-  transition: flex-grow 0.8s cubic-bezier(0.34, 1.4, 0.64, 1);
+  transition: flex-grow 1.3s cubic-bezier(0.34, 1.4, 0.64, 1);
   /* A springier bounce where supported: overshoots, dips back, settles */
-  transition: flex-grow 0.9s linear(0, 0.35 12%, 0.8 28%, 1.08 45%, 0.94 62%, 1.02 78%, 1);
+  transition: flex-grow 1.4s linear(0, 0.35 12%, 0.8 28%, 1.08 45%, 0.94 62%, 1.02 78%, 1);
 }
 
 .season-stripe .fall { background: var(--fall); }
@@ -320,6 +320,91 @@ body[data-theme="spring"] .season-stripe span:not(.spring) {
   stroke-width: 1.4;
   transform: translateY(-50%) rotate(-12deg);
   pointer-events: none;
+}
+
+/* Snowflakes, leaves, or petals drifting across a season's banner (made in
+   app.js). Each one falls (or rises) slowly while swaying side to side. */
+.particles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  top: -12%;
+  left: var(--x);
+  width: var(--size);
+  height: var(--size);
+  color: #fff;
+  opacity: var(--o);
+  animation: particle-fall var(--dur) linear var(--delay) infinite;
+}
+
+.particle-inner {
+  display: block;
+  width: 100%;
+  height: 100%;
+  animation: particle-sway var(--sway) ease-in-out var(--delay) infinite alternate;
+}
+
+.particle .icon {
+  width: 100%;
+  height: 100%;
+  stroke-width: 2.2;
+}
+
+.leaf .particle .icon {
+  fill: currentColor;
+  fill-opacity: 0.35;
+  stroke-width: 1.8;
+}
+
+.leaf .particle:nth-child(3n + 1) { color: #ffc078; }
+.leaf .particle:nth-child(3n + 2) { color: #ffe8cc; }
+
+.leaf .particle-inner {
+  animation-name: particle-tumble;
+}
+
+.petal .particle {
+  animation-name: particle-rise;
+}
+
+.petal .particle-inner {
+  border-radius: 70% 0 70% 0;
+  background: #fff3bf;
+}
+
+.petal .particle:nth-child(odd) .particle-inner {
+  background: #ffe066;
+}
+
+@keyframes particle-fall {
+  from { top: -12%; }
+  to { top: 108%; }
+}
+
+@keyframes particle-rise {
+  from { top: 108%; }
+  to { top: -12%; }
+}
+
+@keyframes particle-sway {
+  from { transform: translateX(calc(var(--drift) * -1)) rotate(0deg); }
+  to { transform: translateX(var(--drift)) rotate(90deg); }
+}
+
+@keyframes particle-tumble {
+  from { transform: translateX(calc(var(--drift) * -1)) rotate(-35deg); }
+  to { transform: translateX(var(--drift)) rotate(35deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .particles {
+    display: none;
+  }
 }
 
 .lead {
