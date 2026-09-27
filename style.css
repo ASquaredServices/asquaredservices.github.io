@@ -135,8 +135,7 @@ h3 {
   border-bottom: 1px solid var(--line);
 }
 
-/* The three season bars. On a season's page, the other two shrink away with
-   a little bounce; on the home page, all three come back. */
+/* The three season bars. app.js sizes and animates them for each page. */
 .season-stripe {
   display: flex;
   height: 4px;
@@ -145,26 +144,13 @@ h3 {
 
 .season-stripe span {
   flex: 1 1 0;
-  transition: flex-grow 1.3s cubic-bezier(0.34, 1.4, 0.64, 1);
-  /* A springier bounce where supported: overshoots, dips back, settles */
-  transition: flex-grow 1.4s linear(0, 0.35 12%, 0.8 28%, 1.08 45%, 0.94 62%, 1.02 78%, 1);
 }
 
 .season-stripe .fall { background: var(--fall); }
 .season-stripe .winter { background: var(--winter); }
 .season-stripe .spring { background: var(--spring); }
 
-body[data-theme="fall"] .season-stripe span:not(.fall),
-body[data-theme="winter"] .season-stripe span:not(.winter),
-body[data-theme="spring"] .season-stripe span:not(.spring) {
-  flex-grow: 0;
-}
 
-@media (prefers-reduced-motion: reduce) {
-  .season-stripe span {
-    transition: none;
-  }
-}
 
 .header-inner {
   display: flex;

@@ -17,15 +17,45 @@
   const pages = $$(".page");
   let lastTheme = null;
 
-  // Going between Fall and Spring, the blue Winter bar at the very top briefly
-  // shows between them, as if it's being pushed out of the way.
-  function bumpMiddleBar() {
-    const bar = $(".season-stripe .winter");
-    if (!bar || !bar.animate || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    bar.animate(
-      [{ flexGrow: 0 }, { flexGrow: 0.1, offset: 0.2 }, { flexGrow: 0, offset: 0.5 }, { flexGrow: 0 }],
-      { duration: 1400, easing: "ease-in-out" }
-    );
+  // The three colored bars at the very top. On a season's page the other two
+  // shrink away with a little bounce; on the home page all three come back.
+  // Each change starts from exactly what's on screen, so tapping quickly
+  // between pages never leaves a gap or makes a bar jump.
+  const stripe = $(".season-stripe");
+  const stripeBars = stripe ? $$("span", stripe) : [];
+  const BOUNCE = window.CSS && CSS.supports("transition-timing-function", "linear(0, 1)")
+    ? "linear(0, 0.35 12%, 0.8 28%, 1.08 45%, 0.94 62%, 1.02 78%, 1)" // overshoots, dips back, settles
+    : "cubic-bezier(0.34, 1.4, 0.64, 1)";
+
+  function moveBars(theme, previousTheme) {
+    if (!stripe) return;
+    const total = stripe.getBoundingClientRect().width || 1;
+    const from = stripeBars.map((bar) => bar.getBoundingClientRect().width / total);
+    const to = stripeBars.map((bar) => (theme === "home" ? 1 / 3 : bar.classList.contains(theme) ? 1 : 0));
+    stripeBars.forEach((bar, i) => {
+      bar.getAnimations().forEach((animation) => animation.cancel());
+      bar.style.flexGrow = to[i];
+    });
+    if (!previousTheme || !stripe.animate || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    stripeBars.forEach((bar, i) => {
+      if (Math.abs(from[i] - to[i]) > 0.001) {
+        bar.animate([{ flexGrow: from[i] }, { flexGrow: to[i] }], { duration: 1400, easing: BOUNCE });
+      }
+    });
+    // Between Fall and Spring, the blue Winter bar shows up in the middle at
+    // its home-page size (a third), as if it's being pushed out of the way.
+    if ((previousTheme === "fall" && theme === "spring") || (previousTheme === "spring" && theme === "fall")) {
+      $(".winter", stripe).animate(
+        [
+          { flexGrow: 0 },
+          { flexGrow: 0.5, offset: 0.2 },
+          { flexGrow: 0.5, offset: 0.3 },
+          { flexGrow: 0, offset: 0.6 },
+          { flexGrow: 0 },
+        ],
+        { duration: 1400, easing: "ease-in-out", composite: "add" }
+      );
+    }
   }
 
   function showPage() {
@@ -35,7 +65,7 @@
 
     pages.forEach((p) => p.classList.toggle("active", p === page));
     const theme = page.dataset.theme;
-    if ((lastTheme === "fall" && theme === "spring") || (lastTheme === "spring" && theme === "fall")) bumpMiddleBar();
+    if (theme !== lastTheme) moveBars(theme, lastTheme);
     lastTheme = theme;
     document.body.dataset.theme = theme;
     document.title = page.dataset.title ? page.dataset.title + " · A² Services" : "A² Services";
