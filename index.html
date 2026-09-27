@@ -135,9 +135,16 @@
             <h2><span data-price="seasonPass.price">$200</span> covers the whole winter</h2>
             <ul class="checks">
               <li><svg class="icon"><use href="#i-check"/></svg>Every snowstorm this winter</li>
-              <li><svg class="icon"><use href="#i-check"/></svg>Everything covered: any size driveway, sidewalk, paths, and snow melt</li>
+              <li><svg class="icon"><use href="#i-check"/></svg>Everything covered: driveway, sidewalk, paths, and snow melt</li>
               <li><svg class="icon"><use href="#i-check"/></svg>No need to book each storm. We just show up.</li>
+              <li><svg class="icon"><use href="#i-check"/></svg>Little to no snow this winter? We'll refund part of your pass.</li>
             </ul>
+            <div class="pass-pay">
+              <h3>How paying works</h3>
+              <p><b>Venmo, PayPal, or Zelle:</b> pay up front, when we confirm your pass.</p>
+              <p><b>Cash or check:</b> pay at the first storm.</p>
+            </div>
+            <p class="pass-fine">Have a larger area to clear? Please <a href="#contact">contact us</a> about the price. Most properties still cost only <span data-price="seasonPass.price">$200</span>.</p>
           </div>
           <details class="pass-signup">
             <summary class="btn btn-light">Sign up for the Season Pass</summary>
@@ -146,18 +153,10 @@
               <div class="booking-main">
                 <div data-contact-fields></div>
                 <fieldset>
-                  <legend>Your property</legend>
-                  <div class="field">
-                    <span>Parking spaces / driveway</span>
-                    <div class="choices" data-choices="driveway" data-plain></div>
-                  </div>
-                  <div class="field">
-                    <span>Sidewalk</span>
-                    <div class="choices" data-choices="sidewalk" data-plain></div>
-                  </div>
+                  <legend>Anything else?</legend>
                   <label class="field">
-                    <span>Anything else we should know? <em class="optional">(optional)</em></span>
-                    <textarea name="Comments" rows="3"></textarea>
+                    <span>Anything we should know? <em class="optional">(optional)</em></span>
+                    <textarea name="Comments" rows="3" placeholder="For example: where you park, or a side path you'd like cleared."></textarea>
                   </label>
                 </fieldset>
                 <fieldset>
@@ -262,7 +261,7 @@
           <p class="lead">When it snows, we shovel your driveway and sidewalk, clear a path to your door, and put down snow melt so everything stays safe.</p>
           <p class="hero-links">
             <span class="price-chip">From <span data-price="winter.driveway.1.price">$20</span></span>
-            <a class="btn btn-ghost" href="#season-pass">Every storm covered: <span data-price="seasonPass.price">$200</span> Season Pass <svg class="icon"><use href="#i-arrow"/></svg></a>
+            <a class="btn btn-ghost" href="#season-pass"><span>Every storm covered: <span data-price="seasonPass.price">$200</span> Season Pass</span><svg class="icon"><use href="#i-arrow"/></svg></a>
           </p>
         </div>
       </div>
@@ -281,6 +280,7 @@
               <div class="field">
                 <span>Expected snowfall</span>
                 <div class="choices" data-choices="snowfall"></div>
+                <p class="hint">Go by the forecast. It's only an estimate: on the day, we'll measure the actual snowfall and adjust the price to match. Not sure? Pick &ldquo;Not sure&rdquo; and we'll price it on the day.</p>
               </div>
               <div class="field">
                 <span>Parking spaces / driveway</span>
@@ -300,7 +300,7 @@
               <!-- The badge and message here are updated by app.js as the order changes. -->
               <label class="addon melt">
                 <input type="checkbox" name="Snow melt" value="Yes">
-                <span><b>Snow melt (salt)</b><span data-melt-message>Free on orders over <span data-price="winter.snowMelt.freeOver">$50</span>, otherwise <span data-price="winter.snowMelt.price">$5</span></span></span>
+                <span><b>Snow melt (salt)</b><span data-melt-message>Free on orders of <span data-price="winter.snowMelt.freeFrom">$50</span> or more, otherwise <span data-price="winter.snowMelt.price">$5</span></span></span>
                 <span class="melt-badge" data-melt-badge></span>
               </label>
               <label class="field">

@@ -103,30 +103,24 @@
       checked: 0,
       options: C.winter.snowfall.map((o) => ({
         value: o.label,
-        note: o.extra ? "+" + percent(o.extra) : "No extra",
+        note: o.extra === null ? "Price it on the day" : o.extra ? "+" + percent(o.extra) : "No extra",
       })),
     }),
-    driveway: (plain) => ({
+    driveway: () => ({
       name: "Driveway",
-      checked: plain ? -1 : 1,
-      options: C.winter.driveway.map((o) => ({
-        value: o.label,
-        note: plain ? "" : o.price ? money(o.price) : "$0",
-      })),
+      checked: 1,
+      options: C.winter.driveway.map((o) => ({ value: o.label, note: money(o.price) })),
     }),
-    sidewalk: (plain) => ({
+    sidewalk: () => ({
       name: "Sidewalk",
-      checked: plain ? -1 : 0,
-      options: C.winter.sidewalk.map((o) => ({
-        value: o.label,
-        note: plain ? "" : o.price ? "+" + money(o.price) : "$0",
-      })),
+      checked: 0,
+      options: C.winter.sidewalk.map((o) => ({ value: o.label, note: o.price ? "+" + money(o.price) : "$0" })),
     }),
   };
 
   // Turns <div data-choices="driveway"> into a row of pill-shaped radio buttons.
   $$("[data-choices]").forEach((group) => {
-    const set = choiceSets[group.dataset.choices](group.hasAttribute("data-plain"));
+    const set = choiceSets[group.dataset.choices]();
     group.setAttribute("role", "radiogroup");
     set.options.forEach((opt, i) => {
       const label = document.createElement("label");
@@ -159,8 +153,13 @@
     group.after(note);
     const update = () => {
       const picked = C.paymentMethods.find((m) => m.name === form.elements.Payment.value);
-      if (form.dataset.kind === "pass") note.textContent = C.seasonPass.paymentNote;
-      else note.textContent = picked ? picked.note : "You pay once the job is done.";
+      if (form.dataset.kind === "pass") {
+        note.textContent = picked
+          ? picked.passNote
+          : "Paying with Venmo, PayPal, or Zelle? Pay up front. Paying with cash or check? Pay at the first storm.";
+      } else {
+        note.textContent = picked ? picked.note : "You pay once the job is done.";
+      }
     };
     group.addEventListener("change", update);
     form.addEventListener("reset", () => setTimeout(update));
@@ -216,21 +215,43 @@
           subtotal: 0,
         };
       }
-      const snowCost = base * snowfall.extra;
-      const subtotal = base + snowCost;
-      const meltFree = subtotal > C.winter.snowMelt.freeOver;
-      const meltCost = f["Snow melt"].checked ? (meltFree ? 0 : C.winter.snowMelt.price) : null;
+      // Snow melt is free once the order (before snow melt) reaches the limit.
+      const wantsMelt = f["Snow melt"].checked;
+      const withMelt = (subtotal) =>
+        subtotal + (wantsMelt && subtotal < C.winter.snowMelt.freeFrom ? C.winter.snowMelt.price : 0);
 
       const lines = [];
       if (driveway && driveway.price) lines.push(["Driveway (" + driveway.label + ")", money(driveway.price)]);
       if (sidewalk && sidewalk.price) lines.push(["Sidewalk", money(sidewalk.price)]);
+
+      // "Not sure": show the range from the least to the most snow.
+      if (snowfall.extra === null) {
+        const maxExtra = Math.max(...C.winter.snowfall.map((o) => o.extra || 0));
+        const low = withMelt(base);
+        const high = withMelt(base * (1 + maxExtra));
+        lines.push(["Snowfall", "Measured on the day"]);
+        lines.push(["Paths to your door", "Free"]);
+        if (wantsMelt) lines.push(["Snow melt", base >= C.winter.snowMelt.freeFrom ? "Free" : "Depends on total"]);
+        return {
+          lines,
+          totalLabel: "Estimated range",
+          total: low === high ? money(low) : money(low) + "–" + money(high),
+          note: "On the day, we'll measure the snowfall and text or email you the final price.",
+          meltFree: base >= C.winter.snowMelt.freeFrom,
+          subtotal: base,
+        };
+      }
+
+      const snowCost = base * snowfall.extra;
+      const subtotal = base + snowCost;
+      const meltFree = subtotal >= C.winter.snowMelt.freeFrom;
       lines.push(["Snowfall " + snowfall.label + " (+" + percent(snowfall.extra) + ")", money(snowCost)]);
       lines.push(["Paths to your door", "Free"]);
-      if (meltCost !== null) lines.push(["Snow melt", meltCost ? money(meltCost) : "Free"]);
+      if (wantsMelt) lines.push(["Snow melt", meltFree ? "Free" : money(C.winter.snowMelt.price)]);
       return {
         lines,
-        total: money(subtotal + (meltCost || 0)),
-        note: "The final price depends on how much snow actually falls.",
+        total: money(withMelt(subtotal)),
+        note: "On the day, we'll measure the actual snowfall and adjust the price to match.",
         meltFree,
         subtotal,
       };
@@ -251,7 +272,7 @@
         lines: [["Winter Season Pass", money(C.seasonPass.price)]],
         totalLabel: "Total",
         total: money(C.seasonPass.price),
-        note: "Covers every snowstorm this winter. We'll reach out to confirm.",
+        note: "Covers every snowstorm this winter. Little to no snow? We'll refund part of it.",
       };
     },
   };
@@ -290,11 +311,11 @@
       const oldPrice = document.createElement("s");
       oldPrice.textContent = money(melt.price);
       badge.replaceChildren(oldPrice, " FREE");
-      message.textContent = "Your order is over " + money(melt.freeOver) + ", so snow melt is free!";
+      message.textContent = "Your order is " + money(melt.freeFrom) + " or more, so snow melt is free!";
     } else {
       badge.textContent = money(melt.price);
       message.textContent =
-        "Free on orders over " + money(melt.freeOver) +
+        "Free on orders of " + money(melt.freeFrom) + " or more" +
         (est.subtotal ? " (yours is " + money(est.subtotal) + " so far)" : "") + ".";
     }
   }

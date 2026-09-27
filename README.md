@@ -14,7 +14,7 @@ The website is live at **https://asquaredservices.github.io**.
 | [google-sheet/](google-sheet/SETUP.md) | How to connect the forms to a Google Sheet, plus the script to paste in |
 | [flier/](flier/) | The printable black-and-white flier ([flier.pdf](flier/flier.pdf)) and QR code. No prices on it; the QR code sends people to the website. |
 
-Text that still needs Adrian's real wording is marked with `DRAFT` comments in `index.html`.
+Text that still needs Adrian's real wording is marked with `DRAFT` comments in `index.html`. What's left before the full rollout is in [TODO.md](TODO.md).
 
 ## How publishing works
 

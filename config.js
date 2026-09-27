@@ -17,23 +17,38 @@ window.A2_CONFIG = {
     email: "", // e.g. "asquaredservices@gmail.com"
   },
 
-  // The note appears under the payment choices when that option is picked.
+  // The notes appear under the payment choices when that option is picked:
+  // "note" on regular orders, "passNote" on the Season Pass.
   paymentMethods: [
     {
       name: "Cash",
       note: "Pay us in cash when we finish the job. If you won't be home, leave it in an envelope marked “A²” and tell us where to find it in the comments.",
+      passNote: "Pay at the first storm: hand it to us when we come to shovel, or leave it in an envelope marked “A²” and tell us where to find it in the comments.",
     },
     {
       name: "Check",
       note: "Pay by check when we finish the job. Hand it to us, or leave it in an envelope marked “A²” and tell us where to find it in the comments.",
+      passNote: "Pay at the first storm: hand us a check when we come to shovel, or leave it in an envelope marked “A²” and tell us where to find it in the comments.",
     },
-    { name: "Venmo", note: "When the job is done, we'll text or email you our Venmo so you can pay." },
-    { name: "PayPal", note: "When the job is done, we'll text or email you our PayPal so you can pay." },
-    { name: "Zelle", note: "When the job is done, we'll text or email you our Zelle info so you can pay." },
+    {
+      name: "Venmo",
+      note: "When the job is done, we'll text or email you our Venmo so you can pay.",
+      passNote: "Pay up front: when we confirm your pass, we'll text or email you our Venmo so you can pay.",
+    },
+    {
+      name: "PayPal",
+      note: "When the job is done, we'll text or email you our PayPal so you can pay.",
+      passNote: "Pay up front: when we confirm your pass, we'll text or email you our PayPal so you can pay.",
+    },
+    {
+      name: "Zelle",
+      note: "When the job is done, we'll text or email you our Zelle info so you can pay.",
+      passNote: "Pay up front: when we confirm your pass, we'll text or email you our Zelle info so you can pay.",
+    },
   ],
 
   fall: {
-    pricePerBag: 10, // per full 30-gallon bag of leaves
+    pricePerBag: 5, // per full 30-gallon bag of leaves
     maxBags: 99,
   },
 
@@ -49,17 +64,19 @@ window.A2_CONFIG = {
       { label: "Sidewalk", price: 10 },
     ],
     // "extra" is added on top of the base cost: 0.5 means +50%.
+    // "Not sure" (extra: null) means we measure the snow on the day.
     snowfall: [
       { label: "0–4 in", extra: 0 },
       { label: "4–8 in", extra: 0.5 },
       { label: "8+ in", extra: 1 },
+      { label: "Not sure", extra: null },
     ],
-    // Snow melt is free when the order is over "freeOver" dollars.
-    snowMelt: { price: 5, freeOver: 50 },
+    // Snow melt is free once the order (before snow melt) reaches "freeFrom"
+    // dollars. A $45 order plus $5 snow melt is $50, not free.
+    snowMelt: { price: 5, freeFrom: 50 },
   },
 
   seasonPass: {
     price: 200,
-    paymentNote: "When we confirm your Season Pass, we'll let you know when payment is due.",
   },
 };

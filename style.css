@@ -17,7 +17,7 @@
   --spring: #37b24d;
   --brand: #2f5bea;
 
-  /* Logo colors: the "A" and the "2" */
+  /* Logo colors: the "A" and the "2". Each season below has its own. */
   --logo-a: #16296e;
   --logo-2: #3d8bff;
 }
@@ -28,6 +28,8 @@
   --tint: #edf2ff;
   --bg: #f6f7fb;
   --hero: linear-gradient(135deg, #16296e 0%, #1d3fae 55%, #2f5bea 100%);
+  --logo-a: #16296e;
+  --logo-2: #3d8bff;
 }
 
 /* Fall: red and orange */
@@ -37,6 +39,8 @@
   --tint: #fff4e6;
   --bg: #fffaf4;
   --hero: linear-gradient(135deg, #a61e1e 0%, #d9480f 60%, #f08c00 100%);
+  --logo-a: #b02525;
+  --logo-2: #f76707;
 }
 
 /* Winter: blue and white */
@@ -46,6 +50,8 @@
   --tint: #e7f5ff;
   --bg: #f4f9ff;
   --hero: linear-gradient(135deg, #0b3d91 0%, #1971c2 60%, #4dabf7 100%);
+  --logo-a: #0b3d91;
+  --logo-2: #4dabf7;
 }
 
 /* Spring & summer: green and yellow */
@@ -55,6 +61,8 @@
   --tint: #f4fce3;
   --bg: #fafdf3;
   --hero: linear-gradient(135deg, #1f7a35 0%, #2f9e44 50%, #94c11f 80%, #fab005 100%);
+  --logo-a: #2b8a3e;
+  --logo-2: #f5a700;
 }
 
 /* ------------------------------------------------------------ Base */
@@ -173,18 +181,18 @@ h3 {
 
 .tabs {
   display: flex;
-  gap: 6px;
+  gap: 12px;
 }
 
 .tab {
   --c: var(--brand);
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  padding: 8px 14px;
+  gap: 8px;
+  padding: 9px 16px;
   border-radius: 999px;
   color: var(--ink);
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 800;
   text-decoration: none;
   white-space: nowrap;
@@ -196,6 +204,8 @@ h3 {
 .tab[data-tab="spring"] { --c: var(--spring); }
 
 .tab .icon {
+  width: 22px;
+  height: 22px;
   color: var(--c);
 }
 
@@ -214,30 +224,31 @@ h3 {
 
 @media (max-width: 700px) {
   html {
-    scroll-padding-top: 170px;
+    scroll-padding-top: 190px;
   }
 
   .tabs {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
     width: 100%;
   }
 
   .tab {
     flex-direction: column;
-    justify-content: center;
-    gap: 3px;
-    padding: 7px 4px;
-    border-radius: 12px;
-    font-size: 0.8rem;
+    justify-content: flex-start;
+    gap: 5px;
+    padding: 9px 2px 8px;
+    border-radius: 14px;
+    font-size: 0.82rem;
     line-height: 1.15;
     text-align: center;
     white-space: normal;
   }
 
   .tab .icon {
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
   }
 }
 
@@ -424,6 +435,7 @@ h3 {
   color: #fff;
   box-shadow: inset 0 0 0 1.5px rgb(255 255 255 / 0.65);
   padding: 8px 18px;
+  text-align: left;
 }
 
 .btn-block {
@@ -601,6 +613,32 @@ h3 {
   }
 }
 
+@media (max-width: 400px) {
+  .equation {
+    gap: 8px;
+  }
+
+  .term .big {
+    height: 54px;
+    font-size: 54px;
+    line-height: 54px;
+  }
+
+  .term .logo {
+    width: 57px;
+    height: 54px;
+  }
+
+  .term .name {
+    font-size: 0.7rem;
+  }
+
+  .op {
+    font-size: 30px;
+    line-height: 54px;
+  }
+}
+
 /* Season pass */
 
 .pass {
@@ -655,6 +693,35 @@ h3 {
   background: #fff;
   color: var(--accent-dark);
   stroke-width: 3;
+}
+
+.pass-pay {
+  max-width: 34em;
+  margin: 0 0 16px;
+  padding: 14px 18px;
+  border-radius: 14px;
+  background: rgb(255 255 255 / 0.14);
+  box-shadow: inset 0 0 0 1.5px rgb(255 255 255 / 0.35);
+}
+
+.pass-pay h3 {
+  margin: 0 0 6px;
+  font-size: 1.05rem;
+}
+
+.pass-pay p {
+  margin: 0;
+}
+
+.pass-fine {
+  margin: 0 0 24px;
+  font-size: 0.92rem;
+  opacity: 0.92;
+}
+
+.pass-fine a {
+  color: #fff;
+  font-weight: 800;
 }
 
 .pass-signup {
@@ -1220,6 +1287,17 @@ textarea:focus {
 @media (max-width: 520px) {
   .booking-main {
     padding: 22px 18px;
+  }
+
+  /* Even two-column rows of choices on phones */
+  .choices {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .choice span {
+    min-width: 0;
+    height: 100%;
   }
 
   .field-row {
