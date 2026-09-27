@@ -61,12 +61,11 @@ window.A2_CONFIG = {
       { label: "2 cars", price: 20 },
     ],
     // "extra" is added on top of the base cost: 0.5 means +50%.
-    // "Not sure" (extra: null) means we measure the snow on the day.
+    // An option with extra: null would mean "we'll price the snow on the day".
     snowfall: [
       { label: "0–4 in", extra: 0 },
       { label: "4–8 in", extra: 0.5 },
-      { label: "8+ in", extra: 1 },
-      { label: "Not sure", extra: null },
+      { label: "8–12 in", extra: 1 },
     ],
     // Snow melt is free once the order (before snow melt) reaches "freeFrom"
     // dollars. A $45 order plus $5 snow melt is $50, not free.
