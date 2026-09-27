@@ -34,6 +34,8 @@
   </svg>
 
   <header class="site-header">
+    <!-- One bar per season. On a season's page the other bars shrink away (style.css). -->
+    <div class="season-stripe" aria-hidden="true"><span class="fall"></span><span class="winter"></span><span class="spring"></span></div>
     <div class="container header-inner">
       <a class="brand" href="#home" aria-label="A² Services home">
         <svg class="logo" aria-hidden="true"><use href="#logo"/></svg>
@@ -108,7 +110,7 @@
                 <h3>Snow Shoveling</h3>
                 <p>Driveways and sidewalks, plus free paths to your door.</p>
                 <div class="season-card-foot">
-                  <span class="from">From <span data-price="winter.driveway.1.price">$20</span></span>
+                  <span class="from">From <span data-price="winter.from">$10</span></span>
                   <span class="go">Book <svg class="icon"><use href="#i-arrow"/></svg></span>
                 </div>
               </div>
@@ -133,17 +135,11 @@
             <p class="eyebrow"><svg class="icon"><use href="#i-snow"/></svg>Winter Season Pass</p>
             <h2><span data-price="seasonPass.price">$200</span> Covers the Whole Winter</h2>
             <ul class="checks">
-              <li><svg class="icon"><use href="#i-check"/></svg>Every snowstorm this winter, from the first snow that stays overnight to the last</li>
-              <li><svg class="icon"><use href="#i-check"/></svg>Everything covered: driveway, sidewalk, paths, and snow melt</li>
+              <li><svg class="icon"><use href="#i-check"/></svg>Every snowstorm this winter, from the first snow that stays overnight to the last.</li>
+              <li><svg class="icon"><use href="#i-check"/></svg>Everything covered: driveway, sidewalk, paths, and snow melt.</li>
               <li><svg class="icon"><use href="#i-check"/></svg>It starts on its own with the first storm, so there are no dates to worry about. We just show up.</li>
               <li><svg class="icon"><use href="#i-check"/></svg>Little to no snow this winter? We'll refund part of your pass.</li>
             </ul>
-            <div class="pass-pay">
-              <h3>How Paying Works</h3>
-              <p><b>Venmo:</b> pay up front, when we confirm your pass.</p>
-              <p><b>Cash:</b> pay at the first storm.</p>
-              <p><b>Something else?</b> Pick &ldquo;Other&rdquo; and we'll work it out.</p>
-            </div>
             <p class="pass-fine">Have a larger area to clear? Please <a href="#contact">contact us</a> about the price. Most properties still cost only <span data-price="seasonPass.price">$200</span>.</p>
           </div>
           <details class="pass-signup">
@@ -258,7 +254,7 @@
           <h1>Snow Shoveling</h1>
           <p class="lead">When it snows, we shovel your driveway and sidewalk, clear a path to your door, and can put down snow melt to help keep ice from forming.</p>
           <p class="hero-links">
-            <span class="price-chip">From <span data-price="winter.driveway.1.price">$20</span></span>
+            <span class="price-chip">From <span data-price="winter.from">$10</span></span>
             <a class="btn btn-ghost" href="#season-pass"><span>Every storm covered: <span data-price="seasonPass.price">$200</span> Season Pass</span><svg class="icon"><use href="#i-arrow"/></svg></a>
           </p>
         </div>

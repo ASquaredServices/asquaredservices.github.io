@@ -55,6 +55,9 @@
 
   // ------------------------------------------------ Filling in the page
 
+  // The cheapest winter job, for "From $10".
+  C.winter.from = Math.min(...C.winter.driveway.concat(C.winter.sidewalk).map((o) => o.price).filter((p) => p > 0));
+
   // Every [data-price="fall.pricePerBag"] shows that price from config.js.
   $$("[data-price]").forEach((el) => {
     const value = lookup(el.dataset.price);
