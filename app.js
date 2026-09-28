@@ -18,14 +18,12 @@
   let lastTheme = null;
 
   // The three colored bars at the very top. On a season's page the other two
-  // shrink away with a little bounce; on the home page all three come back.
-  // Each change starts from exactly what's on screen, so tapping quickly
-  // between pages never leaves a gap or makes a bar jump.
+  // slide away smoothly; on the home page all three come back. Each change
+  // starts from exactly what's on screen, so tapping quickly between pages
+  // never leaves a gap or makes a bar jump.
   const stripe = $(".season-stripe");
   const stripeBars = stripe ? $$("span", stripe) : [];
-  const BOUNCE = window.CSS && CSS.supports("transition-timing-function", "linear(0, 1)")
-    ? "linear(0, 0.35 12%, 0.8 28%, 1.08 45%, 0.94 62%, 1.02 78%, 1)" // overshoots, dips back, settles
-    : "cubic-bezier(0.34, 1.4, 0.64, 1)";
+  const SLIDE = { duration: 1400, easing: "ease-in-out" };
 
   function moveBars(theme, previousTheme) {
     if (!stripe) return;
@@ -42,13 +40,10 @@
     // layout: the blue Winter bar grows in the middle, reaches a third of the
     // width halfway through (when all three are equal), and shrinks away
     // again, so you can see you're passing through Winter.
-    const acrossWinter =
-      (previousTheme === "fall" && theme === "spring") || (previousTheme === "spring" && theme === "fall");
-    const timing = acrossWinter ? { duration: 1600, easing: "ease-in-out" } : { duration: 1400, easing: BOUNCE };
     stripeBars.forEach((bar, i) => {
-      if (Math.abs(from[i] - to[i]) > 0.001) bar.animate([{ flexGrow: from[i] }, { flexGrow: to[i] }], timing);
+      if (Math.abs(from[i] - to[i]) > 0.001) bar.animate([{ flexGrow: from[i] }, { flexGrow: to[i] }], SLIDE);
     });
-    if (acrossWinter) {
+    if ((previousTheme === "fall" && theme === "spring") || (previousTheme === "spring" && theme === "fall")) {
       const middle = (from[0] + from[2]) / 2; // makes blue exactly a third at the halfway point
       $(".winter", stripe).animate(
         [
@@ -56,7 +51,7 @@
           { flexGrow: middle, offset: 0.5, easing: "ease-in-out" },
           { flexGrow: 0 },
         ],
-        { duration: 1600, composite: "add" }
+        { duration: SLIDE.duration, composite: "add" }
       );
     }
   }
