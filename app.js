@@ -18,42 +18,56 @@
   let lastTheme = null;
 
   // The three colored bars at the very top. On a season's page the other two
-  // slide away smoothly; on the home page all three come back. Each change
-  // starts from exactly what's on screen, so tapping quickly between pages
-  // never leaves a gap or makes a bar jump.
+  // slide away; on the home page all three come back. Each change starts
+  // from exactly what's on screen, so tapping quickly between pages never
+  // leaves a gap or makes a bar jump. The bars move with transforms (slide
+  // and stretch), which phones can draw smoothly.
   const stripe = $(".season-stripe");
   const stripeBars = stripe ? $$("span", stripe) : [];
-  const SLIDE = { duration: 1400, easing: "ease-in-out" };
+  const SLIDE = { duration: 800, easing: "ease-in-out" };
+
+  // Where each bar sits for a set of widths (fractions that add up to 1).
+  // A tiny overlap hides hairline seams between neighboring bars.
+  function barTransforms(widths) {
+    let left = 0;
+    return widths.map((width) => {
+      const transform = "translateX(" + (left * 100).toFixed(3) + "%) scaleX(" + (width > 0.001 ? width + 0.004 : 0).toFixed(4) + ")";
+      left += width;
+      return transform;
+    });
+  }
 
   function moveBars(theme, previousTheme) {
     if (!stripe) return;
     const total = stripe.getBoundingClientRect().width || 1;
-    const from = stripeBars.map((bar) => bar.getBoundingClientRect().width / total);
+    // (minus the tiny seam overlap that barTransforms adds)
+    const from = stripeBars.map((bar) => Math.min(1, Math.max(0, bar.getBoundingClientRect().width / total - 0.004)));
     const to = stripeBars.map((bar) => (theme === "home" ? 1 / 3 : bar.classList.contains(theme) ? 1 : 0));
+    const end = barTransforms(to);
     stripeBars.forEach((bar, i) => {
       bar.getAnimations().forEach((animation) => animation.cancel());
-      bar.style.flexGrow = to[i];
+      bar.style.transform = end[i];
     });
     if (!previousTheme || !stripe.animate || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    // Between Fall and Spring, the bars pass smoothly through the home-page
-    // layout: the blue Winter bar grows in the middle, reaches a third of the
-    // width halfway through (when all three are equal), and shrinks away
-    // again, so you can see you're passing through Winter.
-    stripeBars.forEach((bar, i) => {
-      if (Math.abs(from[i] - to[i]) > 0.001) bar.animate([{ flexGrow: from[i] }, { flexGrow: to[i] }], SLIDE);
-    });
-    if ((previousTheme === "fall" && theme === "spring") || (previousTheme === "spring" && theme === "fall")) {
-      const middle = (from[0] + from[2]) / 2; // makes blue exactly a third at the halfway point
-      $(".winter", stripe).animate(
-        [
-          { flexGrow: 0, easing: "ease-in-out" },
-          { flexGrow: middle, offset: 0.5, easing: "ease-in-out" },
-          { flexGrow: 0 },
-        ],
-        { duration: SLIDE.duration, composite: "add" }
-      );
+    // Between Fall and Spring, the bars pass through the home-page layout:
+    // the blue Winter bar grows in the middle, is exactly a third of the
+    // width halfway through (all three equal), and shrinks away again.
+    const acrossWinter =
+      (previousTheme === "fall" && theme === "spring") || (previousTheme === "spring" && theme === "fall");
+    const middle = (from[0] + from[2]) / 2;
+
+    // The path is worked out at many small steps, so it's one smooth curve.
+    const steps = 24;
+    const frames = [];
+    for (let k = 0; k <= steps; k++) {
+      const p = k / steps;
+      const widths = from.map((f, i) => f + (to[i] - f) * p);
+      if (acrossWinter) widths[1] += middle * 4 * p * (1 - p);
+      const sum = widths.reduce((a, b) => a + b, 0) || 1;
+      frames.push(barTransforms(widths.map((w) => w / sum)));
     }
+    stripeBars.forEach((bar, i) => bar.animate(frames.map((f) => ({ transform: f[i] })), SLIDE));
   }
 
   function showPage() {

@@ -136,16 +136,25 @@ h3 {
   border-bottom: 1px solid var(--line);
 }
 
-/* The three season bars. app.js sizes and animates them for each page. */
+/* The three season bars. Each bar spans the full width and is slid and
+   stretched into place (app.js animates them for each page); these starting
+   positions show all three equally. */
 .season-stripe {
-  display: flex;
+  position: relative;
   height: 4px;
   overflow: hidden;
 }
 
 .season-stripe span {
-  flex: 1 1 0;
+  position: absolute;
+  inset: 0;
+  transform-origin: 0 0;
+  will-change: transform;
 }
+
+.season-stripe .fall { transform: scaleX(0.3373); }
+.season-stripe .winter { transform: translateX(33.333%) scaleX(0.3373); }
+.season-stripe .spring { transform: translateX(66.667%) scaleX(0.3373); }
 
 .season-stripe .fall { background: var(--fall); }
 .season-stripe .winter { background: var(--winter); }
