@@ -40,7 +40,8 @@ window.A2_CONFIG = {
   ],
 
   fall: {
-    pricePerBag: 5, // per full 30-gallon bag of leaves
+    pricePerBag: 10, // per full 30-gallon bag of leaves
+    ownBagsDiscount: 0.2, // 20% off the order if the customer provides the bags
     maxBags: 99,
   },
 

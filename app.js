@@ -154,10 +154,15 @@
   // The cheapest winter job, for "From $10".
   C.winter.from = Math.min(...C.winter.driveway.concat(C.winter.sidewalk).map((o) => o.price).filter((p) => p > 0));
 
-  // Every [data-price="fall.pricePerBag"] shows that price from config.js.
+  // Every [data-price="fall.pricePerBag"] shows that price from config.js,
+  // and every [data-percent="fall.ownBagsDiscount"] shows that as a percent.
   $$("[data-price]").forEach((el) => {
     const value = lookup(el.dataset.price);
     if (typeof value === "number") el.textContent = money(value);
+  });
+  $$("[data-percent]").forEach((el) => {
+    const value = lookup(el.dataset.percent);
+    if (typeof value === "number") el.textContent = percent(value);
   });
 
   // The phone number gets separate Call and Text buttons (tapping a number
@@ -319,9 +324,16 @@
     fall(f) {
       const bags = Math.min(C.fall.maxBags, Math.max(1, parseInt(f.Bags.value, 10) || 1));
       const cost = bags * C.fall.pricePerBag;
+      const lines = [[bags + (bags === 1 ? " bag" : " bags") + " × " + money(C.fall.pricePerBag), money(cost)]];
+      let total = cost;
+      if (f["Own bags"].checked) {
+        const off = cost * C.fall.ownBagsDiscount;
+        lines.push(["Your own bags (" + percent(C.fall.ownBagsDiscount) + " off)", "−" + money(off)]);
+        total = cost - off;
+      }
       return {
-        lines: [[bags + (bags === 1 ? " bag" : " bags") + " × " + money(C.fall.pricePerBag), money(cost)]],
-        total: money(cost),
+        lines,
+        total: money(total),
         note: "This is an estimate. We'll count the bags when we're done and confirm the final price.",
       };
     },
