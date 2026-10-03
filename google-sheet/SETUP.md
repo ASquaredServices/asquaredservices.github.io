@@ -70,6 +70,15 @@ To get alerts on your phone, use the Gmail app, or add the Gmail account to your
 - Add your own columns to the right, like **Done?** or **Paid?**. New requests leave them blank for you to fill in.
 - Don't rename the column names the script made in row 1. If you do, it adds a new column with the original name.
 
+## Tracking money
+
+To add money tracking, open **Extensions → Apps Script**, pick **setupFinances** in the menu at the top, and click **Run**. It adds two tabs:
+
+- **Jobs:** write down each finished job: the date, the customer, the service (pick from the list), the amount they paid, how they paid, and any notes. A Season Pass counts as one job.
+- **Finances:** works everything out from the Jobs tab: your goal (type it in cell **B4**), total earned, a progress bar toward the goal, how much is still to go, jobs done, average job price, earnings by service, and two charts (money earned over time, and earned each month).
+
+Running it again won't erase anything. To rebuild the Finances tab, delete it and run setupFinances again; the Jobs tab is kept.
+
 ## Changing the script later
 
 If you edit the script, the website won't use the new version until you publish it: **Deploy → Manage deployments → ✏️ (edit) → Version: New version → Deploy**. The URL stays the same.

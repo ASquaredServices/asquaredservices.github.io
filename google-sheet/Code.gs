@@ -50,6 +50,121 @@ function testSetup() {
   console.log("Customer confirmation example sent to: " + (confirmed ? owner : "(not sent)"));
 }
 
+// Run this once to add money tracking: a "Jobs" tab where you write down
+// each finished job and what it paid, and a "Finances" tab that works out
+// totals, averages, your goal progress, and charts from it. (Pick
+// setupFinances in the menu at the top and click Run.) It never touches
+// your request tabs, and running it again won't erase anything.
+function setupFinances() {
+  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  jobsSheet_(spreadsheet);
+  if (spreadsheet.getSheetByName("Finances")) {
+    console.log("There's already a Finances tab. To rebuild it, delete that tab and run setupFinances again (the Jobs tab is kept).");
+    return;
+  }
+  const fin = spreadsheet.insertSheet("Finances", 0);
+  const money = "$#,##0.00";
+  const purple = "#7950f2";
+
+  fin.getRange("A1").setValue("A² Finances").setFontSize(18).setFontWeight("bold");
+  fin.getRange("A2").setValue("Add each finished job to the Jobs tab. Everything here updates on its own.").setFontColor("#586174");
+
+  // Summary
+  fin.getRange("A4:A9").setValues([["Our goal"], ["Total earned"], ["Progress"], ["Still to go"], ["Jobs done"], ["Average job"]])
+    .setFontWeight("bold").setBackground("#f3f0ff");
+  fin.getRange("B4").setValue(500).setBackground("#fff3bf").setNumberFormat(money);
+  fin.getRange("C4").setValue("← type your goal here").setFontColor("#586174");
+  fin.getRange("B5").setFormula("=SUM(Jobs!D2:D)").setNumberFormat(money);
+  fin.getRange("B6").setFormula("=IFERROR(B5/B4, 0)").setNumberFormat("0%");
+  fin.getRange("C6:E6").merge().setFormula('=SPARKLINE(MIN(B5, MAX(B4, 1)), {"charttype","bar"; "max",MAX(B4, 1); "color1","' + purple + '"})');
+  fin.getRange("B7").setFormula("=MAX(0, B4 - B5)").setNumberFormat(money);
+  fin.getRange("B8").setFormula("=COUNT(Jobs!D2:D)");
+  fin.getRange("B9").setFormula("=IFERROR(AVERAGE(Jobs!D2:D), 0)").setNumberFormat(money);
+  fin.getRange("B4:B9").setFontSize(12).setFontWeight("bold");
+
+  // Earned by service
+  fin.getRange("A11").setValue("Earned by service").setFontWeight("bold").setFontSize(12);
+  fin.getRange("A12:C12").setValues([["Service", "Earned", "Jobs"]]).setFontWeight("bold").setBackground("#f3f0ff");
+  fin.getRange("A13").setFormula(
+    '=IFERROR(QUERY(Jobs!C2:D, "select C, sum(D), count(D) where C is not null and D is not null group by C label C \'\', sum(D) \'\', count(D) \'\'", 0), "No jobs yet")');
+  fin.getRange("B13:B20").setNumberFormat(money);
+
+  // Chart data, worked out automatically (the charts below use these columns)
+  fin.getRange("H1").setValue("Chart data (filled in automatically)").setFontColor("#586174");
+  fin.getRange("H3:J3").setValues([["Date", "Earned", "Running total"]]).setFontWeight("bold");
+  fin.getRange("H4").setFormula('=IFERROR(SORT(FILTER({Jobs!A2:A, Jobs!D2:D}, Jobs!A2:A <> "", Jobs!D2:D <> ""), 1, TRUE), "")');
+  fin.getRange("J4").setFormula('=ARRAYFORMULA(IF(I4:I = "", , SUMIF(ROW(I4:I), "<=" & ROW(I4:I), I4:I)))');
+  fin.getRange("H4:H").setNumberFormat("mmm d, yyyy");
+  fin.getRange("I4:J").setNumberFormat(money);
+  fin.getRange("L3:M3").setValues([["Month", "Earned"]]).setFontWeight("bold");
+  fin.getRange("L4").setFormula(
+    '=IFERROR(QUERY({ARRAYFORMULA(IF(Jobs!A2:A = "", , EOMONTH(Jobs!A2:A, -1) + 1)), Jobs!D2:D}, "select Col1, sum(Col2) where Col1 is not null and Col2 is not null group by Col1 order by Col1 label Col1 \'\', sum(Col2) \'\'", 0), "")');
+  fin.getRange("L4:L").setNumberFormat("mmm yyyy");
+  fin.getRange("M4:M").setNumberFormat(money);
+
+  fin.setColumnWidth(1, 160);
+  fin.setColumnWidth(2, 120);
+  fin.setColumnWidth(3, 120);
+  fin.setColumnWidths(8, 6, 110);
+
+  // Charts. If one can't be made, the rest of the tab still works.
+  try {
+    fin.insertChart(fin.newChart()
+      .setChartType(Charts.ChartType.LINE)
+      .addRange(fin.getRange("H3:H500"))
+      .addRange(fin.getRange("J3:J500"))
+      .setNumHeaders(1)
+      .setPosition(22, 1, 0, 0)
+      .setOption("title", "Money earned over time")
+      .setOption("legend", { position: "none" })
+      .setOption("colors", [purple])
+      .setOption("width", 560)
+      .setOption("height", 300)
+      .build());
+    fin.insertChart(fin.newChart()
+      .setChartType(Charts.ChartType.COLUMN)
+      .addRange(fin.getRange("L3:M120"))
+      .setNumHeaders(1)
+      .setPosition(38, 1, 0, 0)
+      .setOption("title", "Earned each month")
+      .setOption("legend", { position: "none" })
+      .setOption("colors", [purple])
+      .setOption("width", 560)
+      .setOption("height", 300)
+      .build());
+  } catch (err) {
+    console.error("Couldn't make the charts: " + err);
+  }
+  spreadsheet.setActiveSheet(fin);
+  console.log("Done! Check the new Finances and Jobs tabs. Type your goal in Finances, cell B4.");
+}
+
+// The "Jobs" tab: one row per finished job. Made if it's missing; an
+// existing Jobs tab (and everything in it) is left alone.
+function jobsSheet_(spreadsheet) {
+  let jobs = spreadsheet.getSheetByName("Jobs");
+  if (jobs) return jobs;
+  jobs = spreadsheet.insertSheet("Jobs", 0);
+  jobs.getRange("A1:F1").setValues([["Date", "Customer", "Service", "Amount paid", "Payment", "Notes"]])
+    .setFontWeight("bold").setBackground("#f3f0ff");
+  jobs.setFrozenRows(1);
+  jobs.getRange("A2:A").setNumberFormat("mmm d, yyyy")
+    .setDataValidation(SpreadsheetApp.newDataValidation().requireDate().setAllowInvalid(false).build());
+  jobs.getRange("C2:C").setDataValidation(SpreadsheetApp.newDataValidation()
+    .requireValueInList(["Fall", "Winter", "Spring & Summer", "Season Pass", "Other"], true).build());
+  jobs.getRange("D2:D").setNumberFormat("$#,##0.00")
+    .setDataValidation(SpreadsheetApp.newDataValidation().requireNumberGreaterThanOrEqualTo(0).setAllowInvalid(false).build());
+  jobs.getRange("E2:E").setDataValidation(SpreadsheetApp.newDataValidation()
+    .requireValueInList(["Cash", "Venmo", "Other"], true).build());
+  jobs.setColumnWidth(1, 120);
+  jobs.setColumnWidth(2, 180);
+  jobs.setColumnWidth(3, 140);
+  jobs.setColumnWidth(4, 110);
+  jobs.setColumnWidth(5, 100);
+  jobs.setColumnWidth(6, 300);
+  return jobs;
+}
+
 // Runs when the website sends a form. (Clicking "Run" on this in the editor
 // won't work, because there's no form data. Use testSetup instead.)
 function doPost(e) {
