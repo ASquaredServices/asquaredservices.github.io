@@ -1262,6 +1262,43 @@ textarea:focus {
   stroke-width: 3;
 }
 
+/* What's included with a service (like leaf removal) */
+.included-box {
+  margin: 0 0 14px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: var(--tint);
+}
+
+.included-box h3 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+}
+
+.included-box ul {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.95rem;
+}
+
+.included-box li {
+  position: relative;
+  padding-left: 28px;
+}
+
+.included-box .icon {
+  position: absolute;
+  top: 2px;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  color: var(--accent-dark);
+  stroke-width: 3;
+}
+
 /* Snow melt: turns into a highlighted "FREE" once the order is big enough */
 
 .addon.melt {
